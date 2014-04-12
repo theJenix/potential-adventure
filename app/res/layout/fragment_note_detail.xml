@@ -43,7 +43,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/,atitude_display"
+        android:id="@+id/latitude_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/latitude_label"
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/longitude_label"
         android:layout_alignBottom="@+id/longitude_label"
-        android:layout_alignLeft="@+id/,atitude_display"
+        android:layout_alignLeft="@+id/latitude_display"
         android:text="Long"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -135,7 +135,7 @@
         android:layout_alignLeft="@+id/title_label"
         android:layout_below="@+id/title_label"
         android:layout_marginTop="21dp"
-        android:text="Note"
+        android:text="Note with longer text that will be replaced by the actual note by the time all is said and done."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageView
@@ -147,13 +147,13 @@
         android:layout_marginRight="19dp"
         android:src="@drawable/audio_icon" />
 
-    <Button
-        android:id="@+id/back_button"
-        style="?android:attr/buttonStyleSmall"
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageView1"
         android:layout_alignParentBottom="true"
-        android:text="Back" />
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/back_icon" />
     
 </RelativeLayout>
