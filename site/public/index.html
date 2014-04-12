@@ -44,6 +44,7 @@
           $.each(data, function(index, note) {
             var audio = "";
             var pic = "";
+            var rec = "";
 
             if (note.audio_path != "") {
               audio = "<audio controls><source src='" + note.audio_path + "' type='audio/mpeg'></audio>";
@@ -53,12 +54,15 @@
               pic = "<img src='" + note.image_path + "' ></img>";
             }
 
+            if (note.recipient != "") {
+              rec = '<h2 class="names">To: ' + note.recipient + '</h2>';
+            }
+
             var content = '<div class="infoWindow">'+
               '<div id="siteNotice">'+
               '</div>'+
               '<h1 id="firstHeading" class="firstHeading">' + note.title + '</h1>'+
-              '<h2 class="names">From: ' + note.sender + '</h2>'+
-              '<h2 class="names">To: ' + note.recipient + '</h2>'+
+              '<h2 class="names">From: ' + note.sender + '</h2>'+ rec +
               '<div id="bodyContent">'+
                 '<p>' + note.note + '</p>'+ pic + audio +
               '</div>'+
@@ -90,7 +94,7 @@
   <body>
     <div id="map-canvas"></div>
     <div id="nav">
-      <a id="addBtn" class="pure-button" href="add.html">Add Note</a>
+      <a id="addBtn" class="pure-button pure-button-primary" href="add.html">Add Note</a>
     </div>
   </body>
 </html>
