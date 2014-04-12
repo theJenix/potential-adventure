@@ -34,7 +34,7 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
     @InjectView(R.id.latitude_display) TextView latView;
     @InjectView(R.id.longitude_display) TextView lonView;
     @InjectView(R.id.note_display) TextView noteView;
-    @InjectView(R.id.back_button) TextView backButton;
+    @InjectView(R.id.back_button) ImageView backButton;
 
     /**
      * The fragment argument representing the item ID that this fragment
