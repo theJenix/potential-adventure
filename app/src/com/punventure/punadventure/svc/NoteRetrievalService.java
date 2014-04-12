@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.punventure.punadventure.event.LocationEvent;
 import com.punventure.punadventure.event.NotesEvent;
@@ -32,7 +33,10 @@ public class NoteRetrievalService extends Service {
         }
     }
 
+    private static final String TAG = NoteRetrievalService.class.getSimpleName();
+    private boolean notifyDelta = false;
     private List<Note> allNotes = new ArrayList<Note>();
+    private Location location;
     
     @Override
     public IBinder onBind(Intent intent) {
@@ -49,12 +53,12 @@ public class NoteRetrievalService extends Service {
     }
 
     @Subscribe public void onLocationChanged(LocationEvent event) {
-        new NoteRetrievalTask().execute(event.getLocation());
+        this.location = event.getLocation();
+        new NoteRetrievalTask().execute(this.location);
     }
 
     @Subscribe public void onRequestNotes(RequestNotesEvent event) {
-        //we want to get the latest location to get the current notes.
-        OttoBus.publish(new RequestLocationEvent());
+        new NoteRetrievalTask().execute(this.location);
     }
 
     private class NoteRetrievalTask extends AsyncTask<Location, Void, List<Note>> {
@@ -70,7 +74,9 @@ public class NoteRetrievalService extends Service {
                 params.put("lon", location.getLongitude());
                 notes = new ArrayList<Note>(client.list(Note.class, params));
             } catch (IOException e) {
-                notes = new ArrayList<Note>();
+                Log.wtf(TAG, e);
+                //if we get an io exception, just reuse the existing notes
+                notes = allNotes; //new ArrayList<Note>();
             }
             
             return notes; //filterNotes(notes, location);
@@ -78,12 +84,14 @@ public class NoteRetrievalService extends Service {
         
         @Override
         protected void onPostExecute(List<Note> result) {
-            if (isDelta(result, allNotes)) {
+            if (notifyDelta && isDelta(result, allNotes)) {
                 new NotificationClient(NoteRetrievalService.this).notifyNewNotes();
             }
             //add all the new notes to the list, and then filter by location, and post the results
             allNotes = result;
             OttoBus.publish(new NotesEvent(allNotes));
+            //all new changes, notify
+            notifyDelta = true;
         }
 
         private boolean isDelta(List<Note> result, List<Note> allNotes) {

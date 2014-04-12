@@ -1,6 +1,8 @@
 Site::Application.routes.draw do
   resources :notes
 
+  get 'noteshack' => 'notes#index_hack'
+
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

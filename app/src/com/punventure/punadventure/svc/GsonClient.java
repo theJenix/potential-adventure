@@ -25,6 +25,7 @@ public class GsonClient {
 
     public <T> List<T> list(Class<T> clazz, Map<String, Object> params) throws IOException {
         URL url = new URL("http://punadv.herokuapp.com/" + resourceName(clazz) + buildParams(params));
+//        URL url = new URL("http://143.215.113.33:3000/" + resourceName(clazz) + buildParams(params));
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         Gson gson = new Gson();
         @SuppressWarnings("unchecked")
@@ -45,6 +46,7 @@ public class GsonClient {
                     builder.append("&");
                 }
                 builder.append(entry.getKey()).append("=").append(entry.getValue().toString());
+                first = false;
             }
             return builder.toString();
         }

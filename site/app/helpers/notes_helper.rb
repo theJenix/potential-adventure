@@ -11,7 +11,7 @@ module NotesHelper
 
   def notes_in_range(lat, lon)
     nir_id = Array.new
-    @notes.each do |note|
+    @ni.each do |note|
       if (ll_distance(lat, lon, note.latitude, note.longitude) < note.visible_range)
         nir_id.append(note.id)
       end
