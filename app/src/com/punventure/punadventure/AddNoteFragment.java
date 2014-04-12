@@ -36,6 +36,7 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
     @InjectView(R.id.latitude_display) TextView latView;
     @InjectView(R.id.longitude_display) TextView lonView;
     @InjectView(R.id.accept_button) ImageView acceptButton;
+    @InjectView(R.id.cancel_button) ImageView cancelButton;
     @InjectView(R.id.add_audio_button) ImageView addAudioButton;
     @InjectView(R.id.add_image_button) ImageView addImageButton;
     @InjectView(R.id.private_checkbox) CheckBox privateRadioBox;
@@ -65,6 +66,15 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
             @Override
             public void onClick(View v) {
                 buildAndSaveNote();
+            }
+
+        });
+
+        cancelButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
             }
 
         });
