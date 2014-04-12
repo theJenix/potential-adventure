@@ -61,12 +61,11 @@ public class NoteRetrievalService extends Service {
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("lat", location.getLatitude());
                 params.put("lon", location.getLongitude());
-                notes = client.list(Note.class, params);
+                notes = new ArrayList<Note>(client.list(Note.class, params));
             } catch (IOException e) {
                 notes = new ArrayList<Note>();
             }
-            notes.addAll(allNotes);
-            return filterNotes(notes, location);
+            return notes; //filterNotes(notes, location);
         }
         
         @Override

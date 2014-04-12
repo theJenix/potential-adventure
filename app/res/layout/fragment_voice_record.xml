@@ -63,8 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/end_recording_button"
         android:layout_alignTop="@+id/start_playback"
-        android:src="@drawable/stop_playback_icon"
-        android:onClick="stopPlayback" />
+        android:src="@drawable/stop_playback_icon" />
 
     <ImageView
         android:id="@+id/start_playback"
@@ -73,8 +72,7 @@
         android:layout_below="@+id/longitude_label"
         android:layout_marginTop="27dp"
         android:layout_toLeftOf="@+id/record_time_display"
-        android:src="@drawable/playback_icon"
-        android:onClick="startPlayback" />
+        android:src="@drawable/playback_icon" />
 
     <Button
         android:id="@+id/add_voice_final"
@@ -83,8 +81,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/start_playback"
         android:layout_marginBottom="45dp"
-        android:text="Finished"
-        android:onClick="finalizeRecording" />
+        android:text="Finished"/>
 
     <Button
         android:id="@+id/cancel_voice"
@@ -92,7 +89,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/add_voice_final"
         android:layout_alignLeft="@+id/end_playback"
-        android:text="Cancel"
-        android:onClick="cancelRecording" />
+        android:text="Cancel"/>
 
 </RelativeLayout>
