@@ -10,11 +10,12 @@ import android.location.LocationProvider;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.Settings;
 
 import com.punventure.punadventure.event.LocationAvailableEvent;
 import com.punventure.punadventure.event.LocationEvent;
+import com.punventure.punadventure.event.RequestLocationEvent;
 import com.punventure.punadventure.model.OttoBus;
+import com.squareup.otto.Subscribe;
 
 public class LocationService extends Service {
 
@@ -30,6 +31,10 @@ public class LocationService extends Service {
     private static final float MIN_UPDATE_DISTANCE = 0;
 
     private LocationManager locationManager;
+
+    private String provider;
+
+    private Location location;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -50,32 +55,42 @@ public class LocationService extends Service {
 //        criteria.setPowerRequirement(Criteria.POWER_LOW);
 //        Provider provider = locationManager.getBestProvider(criteria, false);
         
-        String provider = locationManager.getBestProvider(criteria, false);
-        if (!this.locationManager.isProviderEnabled(provider)) {
-            OttoBus.publish(new LocationAvailableEvent(false));
+        this.provider = locationManager.getBestProvider(criteria, false);
+        this.location = locationManager.getLastKnownLocation(provider);
+        boolean enabled = this.locationManager.isProviderEnabled(provider);
+        OttoBus.publish(new LocationAvailableEvent(enabled, location != null));
+        //publis the last location if it exists
+        if (location != null) {
+            OttoBus.publish(new LocationEvent(location));
         }
+
         LocationListener listener = new LocationListener() {
             
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-                OttoBus.publish(new LocationAvailableEvent(status == LocationProvider.AVAILABLE));
+                OttoBus.publish(new LocationAvailableEvent(locationManager.isProviderEnabled(provider), status == LocationProvider.AVAILABLE));
             }
             
             @Override
             public void onProviderEnabled(String provider) {
-                OttoBus.publish(new LocationAvailableEvent(true));
+                OttoBus.publish(new LocationAvailableEvent(true, location != null));
             }
             
             @Override
             public void onProviderDisabled(String provider) {
-                OttoBus.publish(new LocationAvailableEvent(false));
+                OttoBus.publish(new LocationAvailableEvent(false, location != null));
             }
             
             @Override
-            public void onLocationChanged(Location location) {
-                OttoBus.publish(new LocationEvent(location));
+            public void onLocationChanged(Location l) {
+                location = l;
+                OttoBus.publish(new LocationEvent(l));
             }
         };
         locationManager.requestLocationUpdates(provider, MIN_UPDATE_TIME, MIN_UPDATE_DISTANCE, listener, this.getMainLooper());
+    }
+    
+    @Subscribe public void onRequestLocation(RequestLocationEvent event) {
+        OttoBus.publish(new LocationEvent(location));
     }
 }

@@ -101,7 +101,7 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
     }
     
     @Subscribe public void onLocationAvailabilityChanged(LocationAvailableEvent event) {
-        if (!event.isAvailable()) {
+        if (!event.isEnabled()) {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }
