@@ -27,7 +27,6 @@ public class NoteDetailFragment extends Fragment implements ServiceConnection {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
-    private Note mItem;
     private Note note;
     private long mNoteId;
 
@@ -53,26 +52,21 @@ public class NoteDetailFragment extends Fragment implements ServiceConnection {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_note_detail,
+        return inflater.inflate(R.layout.fragment_note_detail,
                 container, false);
-
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.note_detail))
-                    .setText(mItem.getTitle());
-        }
-
-        return rootView;
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         this.note = ((NoteRetrievalServiceBinder)service).getService().findNoteById(mNoteId);
+        // Show the dummy content as text in a TextView.
+        if (this.note != null) {
+            ((TextView) getView().findViewById(R.id.note_detail))
+                    .setText(note.getTitle());
+        }
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-        // TODO Auto-generated method stub
-        
     }
 }
