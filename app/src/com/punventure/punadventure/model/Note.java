@@ -1,5 +1,7 @@
 package com.punventure.punadventure.model;
 
+import android.net.Uri;
+
 public class Note {
 
     private long id;
@@ -11,6 +13,7 @@ public class Note {
     private String sender;
     private String recipient;
     private int visibleRange;
+    private String imagePath;
 
     public Note() {
         // TODO Auto-generated constructor stub
@@ -103,5 +106,17 @@ public class Note {
         if (id != other.id)
             return false;
         return true;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath; 
+    }
+
+    public void resolveFiles() {
+        // TODO Auto-generated method stub
+        
     }    
 }
