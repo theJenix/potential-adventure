@@ -21,17 +21,17 @@
             mapOptions);
 
         makeMarkers();
-
-        // var marker = new google.maps.Marker({
-        //   position: new google.maps.LatLng(33.777095, -84.395928),
-        //   map: map,
-        //   title: 'Klaus!'
-        // });
       }
 
       function makeMarkers() {
         $.getJSON("http://punadv.herokuapp.com/notes.json", function(data) {
-          console.log(data);
+          $.each(data, function(index, note) {
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(note.latitude, note.longitude),
+              map: map,
+              title: note.title
+            });
+          });
         });
       }
 
