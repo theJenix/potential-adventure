@@ -50,10 +50,12 @@ public class WelcomeFragment extends RoboFragment {
     }
 
     private void onClickEnterButton() {
-        String name = nameView.getText().toString();
         Settings settings = Settings.instance();
-        settings.setName(name);
-        settings.save();
+        if (settings.getName() == null || settings.getName().isEmpty()) {
+            String name = nameView.getText().toString();
+            settings.setName(name);
+            settings.save();
+        }
         startActivity(new Intent(this.getActivity(), NoteListActivity.class));
     }
 }

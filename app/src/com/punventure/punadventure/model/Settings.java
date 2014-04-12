@@ -26,7 +26,7 @@ public class Settings {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         _instance = new Settings(context);
         _instance.name = settings.getString(NAME_KEY, null);
-        if (_instance.name.isEmpty()) {  //no idea why this happens
+        if (_instance.name == null || _instance.name.isEmpty()) {  //no idea why this happens
             _instance.name = null;
         }
         _instance.deviceId = Secure.getString(context.getContentResolver(),

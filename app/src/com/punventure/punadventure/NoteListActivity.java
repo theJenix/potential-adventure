@@ -91,7 +91,7 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
             }
         };
         
-        this.refreshTimer.schedule(refreshTask, 0, 10 * 1000);   
+        this.refreshTimer.schedule(refreshTask, 0, 20 * 1000);   
     }
 
     @Subscribe public void onLocationChanged(LocationEvent event) {

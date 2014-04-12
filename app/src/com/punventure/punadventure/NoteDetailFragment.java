@@ -33,6 +33,7 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
     @InjectView(R.id.show_photo_button) ImageView photoButton;
     @InjectView(R.id.latitude_display) TextView latView;
     @InjectView(R.id.longitude_display) TextView lonView;
+    @InjectView(R.id.note_display) TextView noteView;
 
     /**
      * The fragment argument representing the item ID that this fragment
@@ -101,6 +102,7 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
             if (this.note != null) {
                 ((TextView) getView().findViewById(R.id.title_display))
                         .setText(note.getTitle());
+                noteView.setText(note.getNote());
                 if (note.getAudio_path() == null || note.getAudio_path().isEmpty()) {
                     audioButton.setVisibility(View.INVISIBLE);
                 }
