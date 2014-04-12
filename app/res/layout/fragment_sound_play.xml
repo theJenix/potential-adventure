@@ -8,10 +8,9 @@
         android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="60dp"
         android:src="@drawable/playback_icon" />
 
     <ImageView

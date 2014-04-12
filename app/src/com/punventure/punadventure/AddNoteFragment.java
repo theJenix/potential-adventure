@@ -67,7 +67,6 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
             public void onClick(View v) {
                 buildAndSaveNote();
             }
-
         });
 
         cancelButton.setOnClickListener(new OnClickListener() {
