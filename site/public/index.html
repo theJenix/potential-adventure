@@ -7,6 +7,10 @@
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
+      #infoWindow {
+        height: 200px;
+        width: 300px;
+       }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBetWit_oBeGVWVCTCflsH0QytUwoDg-i8&sensor=false">
     </script>
@@ -26,12 +30,12 @@
       function makeMarkers(map) {
         $.getJSON("http://punadv.herokuapp.com/notes.json", function(data) {
           $.each(data, function(index, note) {
-            var content = '<div id="content">'+
+            var content = '<div class="infoWindow">'+
               '<div id="siteNotice">'+
               '</div>'+
               '<h1 id="firstHeading" class="firstHeading">' + note.title + '</h1>'+
-              '<h2>' + note.sender + '</h2>'+
-              '<h2>' + note.recipient + '</h2>'+
+              '<h2>From: ' + note.sender + '</h2>'+
+              '<h2>To: ' + note.recipient + '</h2>'+
               '<div id="bodyContent">'+
                 '<p>' + note.note + '</p>'+
               '</div>'+
