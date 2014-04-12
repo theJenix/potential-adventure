@@ -98,6 +98,8 @@ public class LocationService extends Service {
     }
     
     @Subscribe public void onRequestLocation(RequestLocationEvent event) {
-        OttoBus.publish(new LocationEvent(location));
+        if (location != null) {
+            OttoBus.publish(new LocationEvent(location));
+        }
     }
 }
