@@ -1,5 +1,9 @@
 package com.punventure.punadventure;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import android.app.Activity;
@@ -41,6 +45,7 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
     @InjectView(R.id.add_image_button) ImageView addImageButton;
     @InjectView(R.id.private_checkbox) CheckBox privateRadioBox;
     @InjectView(R.id.private_name_field) TextView privateNameView;
+    @InjectView(R.id.time_display) TextView timeView;
     
     private Note newNote;
     private Location location;
@@ -107,6 +112,13 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
         if (this.lonView != null && location != null) {
             this.lonView.setText((location.getLongitude() >= 0 ? "E" : "W")
                     + formatLatLon(Math.abs(location.getLongitude())));
+        }
+        
+        if (this.timeView != null) {
+            DateFormat df = new SimpleDateFormat("hh:mm:ss");
+            timeView.setText(df.format(new Date()));
+            
+            
         }
     }
 

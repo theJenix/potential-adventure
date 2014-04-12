@@ -13,6 +13,7 @@ public class Note {
     private String recipient;
     private int visible_range;
     private String image_path = "";
+    private String created_at;
 
     public Note() {
         // TODO Auto-generated constructor stub
@@ -87,6 +88,15 @@ public class Note {
     public void setVisible_range(int visible_range) {
         this.visible_range = visible_range;
     }
+    
+    public String getCreated_at() {
+        return created_at;
+    }
+    
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
     @Override
     public String toString() {
         return this.title;
@@ -113,9 +123,4 @@ public class Note {
             return false;
         return true;
     }
-
-    public void resolveFiles() {
-        // TODO Auto-generated method stub
-        
-    }    
 }
