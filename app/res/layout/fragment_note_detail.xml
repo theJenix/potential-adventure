@@ -43,7 +43,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/,atitude_display"
+        android:id="@+id/latitude_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/latitude_label"
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/longitude_label"
         android:layout_alignBottom="@+id/longitude_label"
-        android:layout_alignLeft="@+id/,atitude_display"
+        android:layout_alignLeft="@+id/latitude_display"
         android:text="Long"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
