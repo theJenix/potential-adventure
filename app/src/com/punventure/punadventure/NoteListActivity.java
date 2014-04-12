@@ -1,8 +1,17 @@
 package com.punventure.punadventure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import com.punventure.punadventure.event.NoteSelectedEvent;
+import com.punventure.punadventure.event.NotesEvent;
+import com.punventure.punadventure.model.Note;
+import com.punventure.punadventure.model.OttoBus;
+import com.squareup.otto.Subscribe;
 
 /**
  * An activity representing a list of Notes. This activity has different
@@ -19,8 +28,7 @@ import android.support.v4.app.FragmentActivity;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends FragmentActivity implements
-        NoteListFragment.Callbacks {
+public class NoteListActivity extends FragmentActivity {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -49,18 +57,28 @@ public class NoteListActivity extends FragmentActivity implements
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        //FIXME TEST DATA
+        List<Note> notes = new ArrayList<Note>();
+        notes.add(new Note("note 1"));
+        notes.add(new Note("note 2"));
+        notes.add(new Note("note 3"));
+        OttoBus.publish(new NotesEvent(notes));
+    }
     /**
      * Callback method from {@link NoteListFragment.Callbacks} indicating that
      * the item with the given ID was selected.
      */
-    @Override
-    public void onItemSelected(String id) {
+    @Subscribe public void onNoteSelected(NoteSelectedEvent event) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(NoteDetailFragment.ARG_ITEM_ID, id);
+            arguments.putLong(NoteDetailFragment.ARG_ITEM_ID, event.getNote().getId());
             NoteDetailFragment fragment = new NoteDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -70,7 +88,7 @@ public class NoteListActivity extends FragmentActivity implements
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, NoteDetailActivity.class);
-            detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, event.getNote().getId());
             startActivity(detailIntent);
         }
     }

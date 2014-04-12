@@ -1,13 +1,19 @@
 package com.punventure.punadventure;
 
-import android.app.Activity;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.punventure.punadventure.dummy.DummyContent;
+import com.punventure.punadventure.event.NoteSelectedEvent;
+import com.punventure.punadventure.event.NotesEvent;
+import com.punventure.punadventure.model.Note;
+import com.punventure.punadventure.model.OttoBus;
+import com.squareup.otto.Subscribe;
 
 /**
  * A list fragment representing a list of Notes. This fragment also supports
@@ -27,37 +33,13 @@ public class NoteListFragment extends ListFragment {
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
     /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
-    private Callbacks mCallbacks = sDummyCallbacks;
-
-    /**
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
-    /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
-    public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         */
-        public void onItemSelected(String id);
-    }
+    private List<Note> notes;
 
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
-     */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public void onItemSelected(String id) {
-        }
-    };
+    private ArrayAdapter<Note> listAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -70,10 +52,14 @@ public class NoteListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        OttoBus.register(this);
+        
+        this.notes = new ArrayList<Note>();
         // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+        this.listAdapter = new ArrayAdapter<Note>(getActivity(),
                 android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1, DummyContent.ITEMS));
+                android.R.id.text1, this.notes);
+        this.setListAdapter(this.listAdapter);
     }
 
     @Override
@@ -89,34 +75,11 @@ public class NoteListFragment extends ListFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // Activities containing this fragment must implement its callbacks.
-        if (!(activity instanceof Callbacks)) {
-            throw new IllegalStateException(
-                    "Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (Callbacks) activity;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sDummyCallbacks;
-    }
-
-    @Override
     public void onListItemClick(ListView listView, View view, int position,
             long id) {
         super.onListItemClick(listView, view, position, id);
 
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        OttoBus.publish(new NoteSelectedEvent(notes.get(position)));
     }
 
     @Override
@@ -148,5 +111,11 @@ public class NoteListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+    
+    @Subscribe public void onNotesReceived(NotesEvent event) {
+        this.notes.clear();
+        this.notes.addAll(event.getNotes());
+        this.listAdapter.notifyDataSetChanged();
     }
 }
