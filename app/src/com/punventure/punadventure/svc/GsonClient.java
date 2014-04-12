@@ -44,8 +44,8 @@ public class GsonClient {
         return clazz.getSimpleName().toLowerCase() + "s.json";
     }
 
-    String host = "143.215.113.33:3000";
-//    String host = "punadv.herokuapp.com";
+//    String host = "143.215.113.33:3000";
+    String host = "punadv.herokuapp.com";
     public <T> List<T> list(Class<T> clazz, Map<String, Object> params) throws IOException {
 //        URL url = new URL("http://punadv.herokuapp.com/" + resourceName(clazz) + buildParams(params));
         URL url = new URL("http://" + host + "/" + resourceName(clazz) + buildParams(params));
