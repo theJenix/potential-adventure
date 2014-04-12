@@ -44,8 +44,8 @@ public class GsonClient {
         return clazz.getSimpleName().toLowerCase() + "s.json";
     }
 
-//    String host = "143.215.113.33:3000";
-    String host = "punadv.herokuapp.com";
+    String host = "143.215.113.33:3000";
+//    String host = "punadv.herokuapp.com";
     public <T> List<T> list(Class<T> clazz, Map<String, Object> params) throws IOException {
 //        URL url = new URL("http://punadv.herokuapp.com/" + resourceName(clazz) + buildParams(params));
         URL url = new URL("http://" + host + "/" + resourceName(clazz) + buildParams(params));
@@ -98,9 +98,31 @@ public class GsonClient {
         }
     }
 
-    public void postAudio(long id, String audioPath) {
-        // TODO Auto-generated method stub
+    public void postAudio(long id, String path) {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost("http://" + host + "/notes/" + id + "/audio");
+        post.addHeader("content_type","audio/mp4");
+        MultipartEntityBuilder build = MultipartEntityBuilder.create();
+        build.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+//        MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);  
         
+        File file = new File(path);
+
+        try
+        {
+            build.addPart("fileName", new StringBody(file.getName()));
+            build.addPart("audio", new FileBody(file));
+
+            post.setEntity(build.build());
+            HttpResponse resp = null;
+            resp = client.execute(post);
+            HttpEntity resEnt = resp.getEntity();
+            Log.w(TAG, EntityUtils.toString(resEnt));
+        }
+        catch(Exception e)
+        {
+            Log.wtf(TAG, e);
+        }
     }
 
     public <T> void postImage(long id, String path) {
@@ -147,13 +169,13 @@ public class GsonClient {
             return builder.toString();
         }
     }
-    public String fetchImage(String image_path) throws IOException {
-        if (image_path.startsWith("public/")) { //HAXX
-            image_path = image_path.substring(7);
+    public String fetchFile(String file_path) throws IOException {
+        if (file_path.startsWith("public/")) { //HAXX
+            file_path = file_path.substring(7);
         }
-        URL url = new URL("http://" + host + "/" + image_path);
+        URL url = new URL("http://" + host + "/" + file_path);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        String fileName = image_path.substring(image_path.lastIndexOf("/") + 1);
+        String fileName = file_path.substring(file_path.lastIndexOf("/") + 1);
         FileOutputStream fos = this.context.openFileOutput(fileName, 0);
         byte [] buffer = new byte[4096];
         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
@@ -164,5 +186,5 @@ public class GsonClient {
         fos.flush();
         fos.close();
         return this.context.getFileStreamPath(fileName).getCanonicalPath();
-    }
+    }    
 }

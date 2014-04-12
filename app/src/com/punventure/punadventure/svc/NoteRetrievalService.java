@@ -76,9 +76,16 @@ public class NoteRetrievalService extends Service {
                 params.put("lon", location.getLongitude());
                 notes = new ArrayList<Note>(client.list(Note.class, params));
                 for (Note note : notes) {
+                    if (note.getAudio_path() != null && !note.getAudio_path().isEmpty()) {
+                        try {
+                            note.setAudio_path(client.fetchFile(note.getAudio_path()));
+                        } catch (IOException e) {
+                            note.setAudio_path("");
+                        }
+                    }
                     if (note.getImage_path() != null && !note.getImage_path().isEmpty()) {
                         try {
-                            note.setImage_path(client.fetchImage(note.getImage_path()));
+                            note.setImage_path(client.fetchFile(note.getImage_path()));
                         } catch (IOException e) {
                             note.setImage_path("");
                         }

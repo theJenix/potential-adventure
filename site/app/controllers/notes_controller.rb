@@ -37,6 +37,16 @@ class NotesController < ApplicationController
     end
   end
 
+  def audio
+    n = Note.find(params[:id])
+    name = params[:fileName]
+    directory = "public/audio"
+    path = File.join(directory, name)
+    File.open(path, "wb") { |f| f.write(params[:audio].read) }
+    n.audio_path = "audio" + "/" + name
+    n.save();
+  end
+
   def image
     n = Note.find(params[:id])
     name = params[:fileName]
@@ -45,8 +55,7 @@ class NotesController < ApplicationController
     File.open(path, "wb") { |f| f.write(params[:image].read) }
     n.image_path = "images" + "/" + name
     n.save();
-  end
-
+  end  
 
   # GET /notes/1
   # GET /notes/1.json

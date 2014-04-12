@@ -3,6 +3,7 @@ package com.punventure.punadventure;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.punventure.punadventure.event.SaveNoteEvent;
@@ -37,7 +38,7 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
     @InjectView(R.id.accept_button) ImageView acceptButton;
     @InjectView(R.id.add_audio_button) ImageView addAudioButton;
     @InjectView(R.id.add_image_button) ImageView addImageButton;
-    @InjectView(R.id.private_radio) RadioButton privateRadioBtn;
+    @InjectView(R.id.private_checkbox) CheckBox privateRadioBox;
     @InjectView(R.id.private_name_field) TextView privateNameView;
     
     private Note newNote;
@@ -110,24 +111,33 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-        // TODO Auto-generated method stub
 
     }
     
     private void buildAndSaveNote() {
-        newNote.setTitle(titleView.getText().toString());
-        newNote.setNote(textView.getText().toString());
-        newNote.setLatitude(location.getLatitude());
-        newNote.setLongitude(location.getLongitude());
-        newNote.setSender(Settings.instance().getName());
-        if (privateRadioBtn.isSelected()) {
-            newNote.setRecipient(privateNameView.getText().toString());            
-        } else {
-            newNote.setRecipient("");
-        }
-        newNote.setVisible_range(50); //default 50 meters
-        OttoBus.publish(new SaveNoteEvent(newNote));
-    }    
+    	if (titleView.getText().toString().equals("") || textView.getText().toString().equals("")
+    			|| location == null || Settings.instance().getName().equals("")
+    			|| (privateRadioBox.isChecked() && privateNameView.getText().toString().equals(""))) {
+    		new AlertDialog.Builder(this.getActivity())
+    			.setTitle("Invalid Input")
+    			.setMessage("Please check the information in each field.")
+    			.setCancelable(true)
+    			.show();
+    	} else {
+	        newNote.setTitle(titleView.getText().toString());
+	        newNote.setNote(textView.getText().toString());
+	        newNote.setLatitude(location.getLatitude());
+	        newNote.setLongitude(location.getLongitude());
+	        newNote.setSender(Settings.instance().getName());
+	        if (privateRadioBox.isChecked()) {
+	            newNote.setRecipient(privateNameView.getText().toString());            
+	        } else {
+	            newNote.setRecipient("");
+	        }
+	        newNote.setVisible_range(50); //default 50 meters
+	        OttoBus.publish(new SaveNoteEvent(newNote));
+    	}
+    }
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     private static final int CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE = 2;

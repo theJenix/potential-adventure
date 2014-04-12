@@ -2,9 +2,9 @@ package com.punventure.punadventure;
 
 import java.io.IOException;
 
+import roboguice.activity.RoboFragmentActivity;
+import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
-import android.app.Activity;
-import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class SoundPlayActivity extends Activity {
+public class SoundPlayActivity extends RoboFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class SoundPlayActivity extends Activity {
 		setContentView(R.layout.activity_sound_play);
 
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
+			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
@@ -52,7 +52,7 @@ public class SoundPlayActivity extends Activity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends RoboFragment {
 		
 	    @InjectView(R.id.play_button) ImageView playButton;
 	    @InjectView(R.id.pause_button) ImageView pauseButton;
@@ -76,46 +76,57 @@ public class SoundPlayActivity extends Activity {
 	    public void onViewCreated(View view, Bundle savedInstanceState) {
 	        super.onViewCreated(view, savedInstanceState);
 	        
-            mPlayer = new MediaPlayer();
-            try {
-                mPlayer.setDataSource(savedInstanceState.getString("audioPath"));
-                mPlayer.prepare();
-            } catch (IOException e) {
-                Log.e("AUDIO", "player prepare() failed");
-            }
-	        
 	        playButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	mPlayer.start();
+	                try {
+	                    if (mPlayer != null && mPlayer.isPlaying()) {
+	                        mPlayer.stop();
+	                    }
+	                    mPlayer = new MediaPlayer();
+	                    
+	                    mPlayer.setDataSource(getActivity().getIntent().getStringExtra("audioPath"));
+	                    mPlayer.prepare();
+	                    mPlayer.start();
+	                } catch (IOException e) {
+	                    Log.e("AUDIO", "player prepare() failed");
+	                }
 	            }
 	        });
 	        
 	        pauseButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	mPlayer.pause();
+	                if (mPlayer != null) {
+	                    mPlayer.pause();
+	                }
 	            }
 	        });
 	        
 	        stopButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	mPlayer.stop();
+	                if (mPlayer != null) {
+	                    mPlayer.stop();
+	                }
 	            }
 	        });
 	        
 	        resetButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	mPlayer.reset();
+	                if (mPlayer != null) {
+	                    mPlayer.reset();
+	                }
 	            }
 	        });
 	        
 	        backButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	mPlayer.release();
+	                if (mPlayer != null) {
+	                    mPlayer.release();
+	                }
 	            	getActivity().finish();
 	            }
 	        });
