@@ -47,11 +47,10 @@
         <service
             android:name="com.punventure.punadventure.svc.NoteRetrievalService"
             android:exported="false" />
-
         <service
             android:name="com.punventure.punadventure.svc.NoteSaveService"
             android:exported="false" />
-        
+
         <activity
             android:name="com.punventure.punadventure.VoiceRecordActivity"
             android:label="@string/title_activity_voice_record" >
@@ -59,6 +58,14 @@
         <activity
             android:name="com.punventure.punadventure.AddNoteActivity"
             android:label="@string/title_activity_add_note" >
+        </activity>
+        <activity
+            android:name="com.punventure.punadventure.SoundPlayActivity"
+            android:label="@string/title_activity_sound_play" >
+        </activity>
+        <activity
+            android:name="com.punventure.punadventure.PhotoViewActivity"
+            android:label="@string/title_activity_photo_view" >
         </activity>
     </application>
 
