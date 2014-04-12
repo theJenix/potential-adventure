@@ -5,99 +5,97 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"  >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/black_rect"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="18dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:src="@drawable/black_rectangle" />
 
     <TextView
         android:id="@+id/latitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignTop="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
         android:text="Latitude"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/longitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/latitude_label"
+        android:layout_alignBaseline="@+id/latitude_label"
+        android:layout_alignBottom="@+id/latitude_label"
+        android:layout_centerHorizontal="true"
         android:text="Longitude"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/time_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/longitude_label"
-        android:text="Time"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/latitude_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/latitude_label"
-        android:layout_marginLeft="44dp"
-        android:layout_toRightOf="@+id/longitude_label"
-        android:text="Lat"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignLeft="@+id/latitude_label"
+        android:layout_below="@+id/latitude_label"
+        android:layout_marginTop="5dp"
+        android:text="Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/longitude_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/longitude_label"
-        android:layout_alignBottom="@+id/longitude_label"
-        android:layout_alignLeft="@+id/latitude_display"
-        android:text="Long"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignLeft="@+id/longitude_label"
+        android:layout_below="@+id/longitude_label"
+        android:layout_marginTop="5dp"
+        android:text="Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/time_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/time_label"
-        android:layout_alignBottom="@+id/time_label"
-        android:layout_alignLeft="@+id/longitude_display"
-        android:text="T"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/from_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/time_label"
         android:layout_below="@+id/time_label"
-        android:layout_marginTop="20dp"
-        android:text="From"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="5dp"
+        android:text="Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/longitude_display"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/longitude_label"
+        android:text="Time"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/blue_rect"
+        android:layout_width="fill_parent"
+        android:layout_height="85dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/black_rect"
+        android:src="@drawable/blue_rectangle" />
 
     <TextView
         android:id="@+id/to_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/from_label"
-        android:layout_below="@+id/from_label"
-        android:text="To"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/from_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/to_label"
-        android:layout_toLeftOf="@+id/time_display"
-        android:text="User"
+        android:layout_alignLeft="@+id/latitude_display"
+        android:layout_below="@+id/black_rect"
+        android:layout_marginTop="10dp"
+        android:text="To:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -106,25 +104,44 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/to_label"
         android:layout_alignBottom="@+id/to_label"
-        android:layout_alignLeft="@+id/from_display"
+        android:layout_toRightOf="@+id/to_label"
+        android:layout_marginLeft="50dp"
         android:text="User/Everyone"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/from_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/to_label"
+        android:layout_below="@+id/to_label"
+        android:text="From:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/from_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/to_display"
+        android:layout_below="@+id/to_display"
+        android:text="User"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/title_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/to_label"
-        android:layout_below="@+id/to_label"
-        android:text="Title"
+        android:layout_alignLeft="@+id/from_label"
+        android:layout_below="@+id/from_label"
+        android:text="Title:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/title_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/to_display"
-        android:layout_below="@+id/to_display"
+        android:layout_alignLeft="@+id/from_display"
+        android:layout_below="@+id/from_display"
         android:text="Titl"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -133,25 +150,34 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/title_label"
-        android:layout_below="@+id/title_label"
-        android:layout_marginTop="21dp"
+        android:layout_below="@+id/blue_rect"
+        android:layout_marginTop="10dp"
         android:text="Note with longer text that will be replaced by the actual note by the time all is said and done."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/play_audio_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/note_display"
-        android:layout_marginRight="19dp"
+        android:layout_marginRight="20dp"
         android:src="@drawable/audio_icon" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/show_photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignLeft="@+id/play_audio_button"
+        android:layout_below="@+id/play_audio_button"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/photo_icon" />
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/play_audio_button"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp"
         android:src="@drawable/back_icon" />
