@@ -22,8 +22,6 @@ import android.widget.Chronometer;
 
 public class VoiceRecordActivity extends RoboActivity {
 	
-	@InjectView(R.id.record_time_display) Chronometer counter;
-	
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
     private String fileName = null;
@@ -63,6 +61,8 @@ public class VoiceRecordActivity extends RoboActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+		
+		@InjectView(R.id.record_time_display) Chronometer counter;
 
 		public PlaceholderFragment() {
 		}
@@ -76,7 +76,7 @@ public class VoiceRecordActivity extends RoboActivity {
 		}
 	}
 
-    private void startRecording() {
+    public void startRecording(View v) {
     	if (mRecorder == null) {
     		try {
 	    		if (fileName != null) {
@@ -101,22 +101,22 @@ public class VoiceRecordActivity extends RoboActivity {
 	
 	        mRecorder.start();
 	        
-	        counter.setBase(0);
-	        counter.start();
+//	        counter.setBase(0);
+//	        counter.start();
     	}
     }
 
-    private void stopRecording() {
+    public void stopRecording(View v) {
     	if (mRecorder != null) {
     		mRecorder.stop();
     		mRecorder.release();
     		mRecorder = null;
 
-    		counter.stop();
+//    		counter.stop();
     	}
     }
     
-    private void startPlayback() {
+    public void startPlayback(View v) {
     	if (mRecorder == null && fileName != null) {
 	        mPlayer = new MediaPlayer();
 	        try {
@@ -129,7 +129,7 @@ public class VoiceRecordActivity extends RoboActivity {
     	}
     }
 
-    private void stopPlayback() {
+    public void stopPlayback(View v) {
     	if (mRecorder == null) {
 	    	mPlayer.stop();
 	        mPlayer.release();
@@ -137,7 +137,7 @@ public class VoiceRecordActivity extends RoboActivity {
     	}
     }
     
-    private void finalizeRecording() {
+    public void finalizeRecording(View v) {
     	if (fileName == null) {
     		new AlertDialog.Builder(this)
 		    	    .setTitle("No Recording")
@@ -152,7 +152,7 @@ public class VoiceRecordActivity extends RoboActivity {
     	}
     }
     
-    private void cancelRecording() {
+    public void cancelRecording(View v) {
     	Intent i = getIntent();
     	setResult(RESULT_CANCELED, i);
     	finish();

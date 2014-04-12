@@ -28,4 +28,14 @@
     tools:context="com.punventure.punadventure.NoteListActivity"
     tools:layout="@android:layout/list_content" />
 
+<Button
+    android:id="@+id/button1"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:text="Button"
+    android:onClick="startAct" />
+
 </RelativeLayout>

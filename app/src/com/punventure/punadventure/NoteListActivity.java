@@ -8,6 +8,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.util.Log;
+import android.view.View;
 
 import com.punventure.punadventure.event.LocationAvailableEvent;
 import com.punventure.punadventure.event.NoteSelectedEvent;
@@ -60,6 +62,21 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
             ((NoteListFragment) getSupportFragmentManager().findFragmentById(
                     R.id.note_list)).setActivateOnItemClick(true);
         }
+
+        
+    }
+    
+    public void startAct(View v) {
+        startActivityForResult(new Intent(this, VoiceRecordActivity.class), 1);    	
+    }
+    
+    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+    	if (resultCode == RESULT_CANCELED) {
+    		Log.d("Return", "Canceled");
+    	} else if (resultCode == RESULT_OK) {
+    		Log.d("Return", "Clear");
+    		Log.d("Return", data.getStringExtra("fileName"));
+    	}
     }
 
     /**
