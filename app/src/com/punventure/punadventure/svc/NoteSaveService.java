@@ -2,6 +2,7 @@ package com.punventure.punadventure.svc;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 
@@ -29,11 +30,19 @@ public class NoteSaveService extends Service {
     }
     
     
-    @Subscribe public void onSaveNote(SaveNoteEvent event) {
+    @Subscribe public void onSaveNote(final SaveNoteEvent event) {
         
-        GsonClient client = new GsonClient();
-        Note note = event.getNote();
-        client.postImage(1, note.getImagePath());
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                GsonClient client = new GsonClient();
+                Note note = event.getNote();
+                client.postImage(1, note.getImagePath());
+                return null;
+            }
+            
+        }.execute();
     }
     
 }

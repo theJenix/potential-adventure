@@ -48,6 +48,10 @@
             android:name="com.punventure.punadventure.svc.NoteRetrievalService"
             android:exported="false" />
 
+        <service
+            android:name="com.punventure.punadventure.svc.NoteSaveService"
+            android:exported="false" />
+        
         <activity
             android:name="com.punventure.punadventure.VoiceRecordActivity"
             android:label="@string/title_activity_voice_record" >
