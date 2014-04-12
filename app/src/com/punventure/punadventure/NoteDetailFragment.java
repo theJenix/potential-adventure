@@ -61,7 +61,7 @@ public class NoteDetailFragment extends Fragment implements ServiceConnection {
         this.note = ((NoteRetrievalServiceBinder)service).getService().findNoteById(mNoteId);
         // Show the dummy content as text in a TextView.
         if (this.note != null) {
-            ((TextView) getView().findViewById(R.id.note_detail))
+            ((TextView) getView().findViewById(R.id.textView1))
                     .setText(note.getTitle());
         }
     }

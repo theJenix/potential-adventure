@@ -16,8 +16,10 @@ import android.os.IBinder;
 import com.punventure.punadventure.event.LocationEvent;
 import com.punventure.punadventure.event.NotesEvent;
 import com.punventure.punadventure.event.RequestLocationEvent;
+import com.punventure.punadventure.event.RequestNotesEvent;
 import com.punventure.punadventure.model.Note;
 import com.punventure.punadventure.model.OttoBus;
+import com.punventure.punadventure.notify.NotificationClient;
 import com.squareup.otto.Subscribe;
 
 public class NoteRetrievalService extends Service {
@@ -50,6 +52,11 @@ public class NoteRetrievalService extends Service {
         new NoteRetrievalTask().execute(event.getLocation());
     }
 
+    @Subscribe public void onRequestNotes(RequestNotesEvent event) {
+        //we want to get the latest location to get the current notes.
+        OttoBus.publish(new RequestLocationEvent());
+    }
+
     private class NoteRetrievalTask extends AsyncTask<Location, Void, List<Note>> {
 
         @Override
@@ -61,19 +68,28 @@ public class NoteRetrievalService extends Service {
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("lat", location.getLatitude());
                 params.put("lon", location.getLongitude());
-                notes = client.list(Note.class, params);
+                notes = new ArrayList<Note>(client.list(Note.class, params));
             } catch (IOException e) {
                 notes = new ArrayList<Note>();
             }
-            notes.addAll(allNotes);
-            return filterNotes(notes, location);
+            
+            return notes; //filterNotes(notes, location);
         }
         
         @Override
         protected void onPostExecute(List<Note> result) {
+            if (isDelta(result, allNotes)) {
+                new NotificationClient(NoteRetrievalService.this).notifyNewNotes();
+            }
             //add all the new notes to the list, and then filter by location, and post the results
             allNotes = result;
             OttoBus.publish(new NotesEvent(allNotes));
+        }
+
+        private boolean isDelta(List<Note> result, List<Note> allNotes) {
+            List<Note> intermediate = new ArrayList<Note>(result);
+            intermediate.removeAll(allNotes);
+            return result.size() != allNotes.size() || !intermediate.isEmpty();
         }
         
     }

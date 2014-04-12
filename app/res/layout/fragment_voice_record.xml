@@ -35,7 +35,8 @@
         android:layout_below="@+id/record_time_display"
         android:layout_marginTop="16dp"
         android:layout_toLeftOf="@+id/record_time_display"
-        android:text="Record" />
+        android:text="Record"
+        android:onClick="startRecording" />
 
     <Button
         android:id="@+id/end_recording_button"
@@ -44,7 +45,17 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/start_recording_button"
         android:layout_toRightOf="@+id/record_time_display"
-        android:text="Done" />
+        android:text="Done"
+        android:onClick="stopRecording" />
+
+    <TextView
+        android:id="@+id/longitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Playback"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
         android:id="@+id/end_playback"
@@ -54,31 +65,30 @@
         android:layout_alignTop="@+id/start_playback"
         android:src="@drawable/stop_playback_icon" />
 
-    <Button
-        android:id="@+id/add_voice_final"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/start_playback"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp"
-        android:text="Finished" />
-
     <ImageView
         android:id="@+id/start_playback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextView01"
+        android:layout_below="@+id/longitude_label"
         android:layout_marginTop="27dp"
         android:layout_toLeftOf="@+id/record_time_display"
         android:src="@drawable/playback_icon" />
 
-    <TextView
-        android:id="@+id/TextView01"
+    <Button
+        android:id="@+id/add_voice_final"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Playback"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/start_playback"
+        android:layout_marginBottom="45dp"
+        android:text="Finished"/>
+
+    <Button
+        android:id="@+id/cancel_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/add_voice_final"
+        android:layout_alignLeft="@+id/end_playback"
+        android:text="Cancel"/>
 
 </RelativeLayout>
