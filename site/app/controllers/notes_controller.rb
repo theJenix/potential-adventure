@@ -22,6 +22,7 @@ class NotesController < ApplicationController
       @ni = notes_in_range(p['lat'].to_f, p['lon'].to_f)
     end
     @notes = @ni
+    @notes["created_at_in_secs"] = @notes.created_at.to_i
   end
   def index_hack
     @ni = Note.all
