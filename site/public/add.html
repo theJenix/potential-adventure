@@ -58,7 +58,7 @@
           var lat = $("#lat").val();
           var lon = $("#lon").val();
 
-          $.post( "http://punadv.herokuapp.com/notes", { title: tit, note: msg, audio_path: "", latitude: parseFloat(lat), longitude: parseFloat(lon), sender: nme, recipient: "", visible_range: parseInt(rng), image_path: ""})
+          $.post( "http://punadv.herokuapp.com/notes", { title: tit, note: msg, audio_path: "", latitude: parseFloat(lat), longitude: parseFloat(lon), sender: nme, recipient: "", visible_range: parseInt(rng), image_path: ""});
         });
       });
     </script>
