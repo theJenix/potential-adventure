@@ -1,0 +1,8 @@
+#Postgres
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: adventure
+  pool: 5
+  username:
+  password:
