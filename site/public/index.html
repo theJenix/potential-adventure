@@ -33,6 +33,11 @@
       function makeMarkers(map) {
         $.getJSON("http://punadv.herokuapp.com/notes.json", function(data) {
           $.each(data, function(index, note) {
+            var audio = "";
+            if (note.audio_path != "") {
+              audio = "<audio controls><source src='" + note.audio_path + "' type='audio/mpeg'></audio>";
+            }
+
             var content = '<div class="infoWindow">'+
               '<div id="siteNotice">'+
               '</div>'+
