@@ -1,19 +1,18 @@
 package com.punventure.punadventure.model;
 
-import android.net.Uri;
 
 public class Note {
 
     private long id;
     private String title;
     private String note;
-    private String audioPath;
+    private String audioPath = "";
     private double latitude;
     private double longitude;
     private String sender;
     private String recipient;
     private int visibleRange;
-    private String imagePath;
+    private String imagePath = "";
 
     public Note() {
         // TODO Auto-generated constructor stub

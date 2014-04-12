@@ -102,4 +102,8 @@ public class LocationService extends Service {
             OttoBus.publish(new LocationEvent(location));
         }
     }
+
+    public Location getCurrentLocation() {
+        return this.location;
+    }    
 }

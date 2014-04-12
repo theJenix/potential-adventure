@@ -1,26 +1,30 @@
 package com.punventure.punadventure;
 
+import roboguice.activity.RoboFragmentActivity;
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
-public class AddNoteActivity extends Activity {
+import com.punventure.punadventure.model.Note;
 
-	@Override
+public class AddNoteActivity extends RoboFragmentActivity {
+
+	private Note newNote;
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_note);
 
+        this.newNote = new Note();
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, new AddNoteFragment()).commit();
 		}
 	}
 
@@ -43,22 +47,4 @@ public class AddNoteActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_add_note,
-					container, false);
-			return rootView;
-		}
-	}
-
 }
