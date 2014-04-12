@@ -31,24 +31,31 @@ public class LocationFragment extends RoboFragment implements ServiceConnection 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         OttoBus.register(this);
-        getActivity().bindService(new Intent(getActivity(), LocationService.class), this, Context.BIND_AUTO_CREATE);
         return inflater.inflate(R.layout.fragment_location,
                 container, false);
+    }
+    
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().bindService(new Intent(getActivity(), LocationService.class), this, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-//        this.locationService = ((LocationServiceBinder)service).getService();
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-//        this.locationService = null;
     }
 
     @Subscribe public void onLocationChanged(LocationEvent event) {
-        this.latView.setText(Location.convert(event.getLocation().getLatitude(),  Location.FORMAT_SECONDS));
-        this.lonView.setText(Location.convert(event.getLocation().getLongitude(), Location.FORMAT_SECONDS));
+        if (this.latView != null) {
+            this.latView.setText(Location.convert(event.getLocation().getLatitude(),  Location.FORMAT_SECONDS));
+        }
+        
+        if (this.lonView != null) {
+            this.lonView.setText(Location.convert(event.getLocation().getLongitude(), Location.FORMAT_SECONDS));
+        }
     }
 
     @Subscribe public void onLocationAvailabilityChanged(LocationAvailableEvent event) {
