@@ -7,7 +7,7 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 90% }
+      #map-canvas { height: 100% }
       h2.names {
         margin: 0;
       }
@@ -16,12 +16,10 @@
         margin-bottom: 5px;
       }
       #nav {
-        height: 10%;
-      }
-
-      #addBtn {
-        margin-top: 10px;
-        margin-left: 10px;
+        position: absolute;
+        bottom: 10px;
+        width: 100px;
+        left: 10px;
       }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBetWit_oBeGVWVCTCflsH0QytUwoDg-i8&sensor=false">
@@ -93,8 +91,12 @@
   </head>
   <body>
     <div id="map-canvas"></div>
-    <div id="nav">
-      <a id="addBtn" class="pure-button pure-button-primary" href="add.html">Add Note</a>
-    </div>
+    <div class="pure-menu pure-menu-open" id="nav">
+      <a class="pure-menu-heading">Placement</a>
+
+      <ul>
+          <li><a href="add.html">Add Note</a></li>
+      </ul>
+  </div>
   </body>
 </html>
