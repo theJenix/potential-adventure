@@ -5,11 +5,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -39,8 +42,8 @@ public class GsonClient {
         return clazz.getSimpleName().toLowerCase() + "s.json";
     }
 
-//    String host = "143.215.113.33:3000";
-    String host = "punadv.herokuapp.com";
+    String host = "143.215.113.33:3000";
+//    String host = "punadv.herokuapp.com";
     public <T> List<T> list(Class<T> clazz, Map<String, Object> params) throws IOException {
 //        URL url = new URL("http://punadv.herokuapp.com/" + resourceName(clazz) + buildParams(params));
         URL url = new URL("http://" + host + "/" + resourceName(clazz) + buildParams(params));
@@ -70,8 +73,15 @@ public class GsonClient {
             connection.getResponseCode();
             InputStreamReader reader = new InputStreamReader(connection.getInputStream());
             BufferedReader br = new BufferedReader(reader);
+            Pattern p = Pattern.compile("Id: (\\d*)");
             while (br.ready()) {
                 String line = br.readLine();
+                Matcher m = p.matcher(line);
+                if (m.find()) {
+                    int id = Integer.valueOf(m.group(1));
+                    obj.getClass().getMethod("id", long.class).invoke(obj, id);
+                    break;
+                }
             }
             // this.retries = 0;
         } catch (IOException ex) {
@@ -79,6 +89,18 @@ public class GsonClient {
             // if (this.retries >= 5) {
             throw new RuntimeException(ex);
             // }
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         } finally {
             if (connection != null) {
                 connection.disconnect();
