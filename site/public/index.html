@@ -55,7 +55,7 @@
             }
 
             if (note.image_path != "" && note.image_path != null) {
-              pic = "<img src='" + note.image_path + "' height='200'></img>";
+              pic = "<a href='" + note.image_path + "'><img src='" + note.image_path + "' height='200'></img></a>";
             }
 
             if (note.recipient != "") {
@@ -98,7 +98,7 @@
   <body>
     <div id="map-canvas"></div>
     <div class="pure-menu pure-menu-open" id="nav">
-      <a class="pure-menu-heading">Placement</a>
+      <a class="pure-menu-heading">Adventure!</a>
 
       <ul>
           <li><a href="add.html">Add Note</a></li>
