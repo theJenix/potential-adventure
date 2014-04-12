@@ -22,9 +22,8 @@
       }
 
       #addBtn {
-        display:inline-block;
-        vertical-align:middle;
-        margin-left: 20px;
+        margin-top: 10px;
+        margin-left: 10px;
       }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBetWit_oBeGVWVCTCflsH0QytUwoDg-i8&sensor=false">
@@ -48,8 +47,14 @@
         $.getJSON("http://punadv.herokuapp.com/notes.json", function(data) {
           $.each(data, function(index, note) {
             var audio = "";
+            var pic = "";
+
             if (note.audio_path != "") {
               audio = "<audio controls><source src='" + note.audio_path + "' type='audio/mpeg'></audio>";
+            }
+
+            if (note.image_path != "") {
+              audio = "<img src='" + note.image_path + "' ></img>";
             }
 
             var content = '<div class="infoWindow">'+
