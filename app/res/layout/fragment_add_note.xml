@@ -30,8 +30,21 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/latitude_label"
         android:layout_alignBottom="@+id/latitude_label"
-        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/latitude_label"
+        android:layout_marginLeft="130dp"
         android:text="Longitude"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/latitude_label"
+        android:layout_alignBottom="@+id/latitude_label"
+        android:layout_alignLeft="@+id/latitude_label"
+        android:layout_marginLeft="260dp"
+        android:text="Time"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
 
@@ -65,17 +78,6 @@
         android:layout_below="@+id/time_label"
         android:layout_marginTop="5dp"
         android:text="Unknown"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF" />
-
-    <TextView
-        android:id="@+id/time_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/longitude_display"
-        android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@+id/longitude_label"
-        android:text="Time"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
 
