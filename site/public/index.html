@@ -7,10 +7,6 @@
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
-      #infoWindow {
-        height: 200px;
-        width: 300px;
-       }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBetWit_oBeGVWVCTCflsH0QytUwoDg-i8&sensor=false">
     </script>
@@ -42,7 +38,8 @@
               '</div>';
 
             var infowindow = new google.maps.InfoWindow({
-              content: content
+              content: content,
+              maxWidth: 200
             });
 
 
