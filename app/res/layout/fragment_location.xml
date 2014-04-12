@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/black_rectangle" >
 
     <TextView
         android:id="@+id/text_lon"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/text_lat"
         android:layout_alignBottom="@+id/text_lat"
         android:layout_marginLeft="22dp"
         android:layout_toRightOf="@+id/text_lat"
-        android:text="TextView" />
+        android:text="Unknown" />
 
     <TextView
         android:id="@+id/text_lat"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="43dp"
-        android:text="TextView" />
+        android:text="Unknown" />
 
     <TextView
-        android:id="@+id/long_label"
+        android:id="@+id/lat_label"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/text_lon"
@@ -34,6 +38,7 @@
 
     <TextView
         android:id="@+id/long_label"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/text_lon"
@@ -43,6 +48,7 @@
 
     <TextView
         android:id="@+id/status_label"
+        android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/text_lon"
@@ -68,6 +74,7 @@
         android:layout_alignBottom="@+id/status_image"
         android:layout_alignTop="@+id/status_label"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
         android:src="@drawable/add_new" />
 
 </RelativeLayout>

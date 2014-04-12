@@ -96,10 +96,6 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
         //restart the timer
         setRefreshTimer();
     }
-
-    public void startAct(View v) {
-        startActivityForResult(new Intent(this, VoiceRecordActivity.class), 1);    	
-    }
     
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
     	if (resultCode == RESULT_CANCELED) {
