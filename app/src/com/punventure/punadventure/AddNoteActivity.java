@@ -1,27 +1,23 @@
 package com.punventure.punadventure;
 
 import roboguice.activity.RoboFragmentActivity;
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.punventure.punadventure.event.NoteSavedEvent;
 import com.punventure.punadventure.model.Note;
+import com.punventure.punadventure.model.OttoBus;
+import com.squareup.otto.Subscribe;
 
 public class AddNoteActivity extends RoboFragmentActivity {
 
-	private Note newNote;
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_note);
 
-        this.newNote = new Note();
+		OttoBus.register(this);
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new AddNoteFragment()).commit();
@@ -46,5 +42,9 @@ public class AddNoteActivity extends RoboFragmentActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Subscribe public void onNoteSaved(NoteSavedEvent event) {
+	    finish();
 	}
 }

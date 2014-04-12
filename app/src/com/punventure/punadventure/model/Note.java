@@ -6,13 +6,13 @@ public class Note {
     private long id;
     private String title;
     private String note;
-    private String audioPath = "";
+    private String audio_path = "";
     private double latitude;
     private double longitude;
     private String sender;
     private String recipient;
-    private int visibleRange;
-    private String imagePath = "";
+    private int visible_range;
+    private String image_path = "";
 
     public Note() {
         // TODO Auto-generated constructor stub
@@ -42,12 +42,7 @@ public class Note {
     public void setNote(String note) {
         this.note = note;
     }
-    public String getAudioPath() {
-        return audioPath;
-    }
-    public void setAudioPath(String audioPath) {
-        this.audioPath = audioPath;
-    }
+
     public double getLatitude() {
         return latitude;
     }
@@ -72,14 +67,26 @@ public class Note {
     public void setRecipient(String recipient) {
         this.recipient = recipient;
     }
-    
-    public int getVisibleRange() {
-        return visibleRange;
-    }
-    public void setVisibleRange(int visibleRange) {
-        this.visibleRange = visibleRange;
+
+    public String getAudio_path() {
+        return audio_path;
     }
     
+    public void setAudio_path(String audio_path) {
+        this.audio_path = audio_path;
+    }
+    public String getImage_path() {
+        return image_path;
+    }
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+    public int getVisible_range() {
+        return visible_range;
+    }
+    public void setVisible_range(int visible_range) {
+        this.visible_range = visible_range;
+    }
     @Override
     public String toString() {
         return this.title;
@@ -105,13 +112,6 @@ public class Note {
         if (id != other.id)
             return false;
         return true;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath; 
     }
 
     public void resolveFiles() {
