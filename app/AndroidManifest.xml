@@ -33,7 +33,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.punventure.punadventure.NoteListActivity" />
         </activity>
-
         <activity
             android:name="com.punventure.punadventure.WelcomeActivity"
             android:label="@string/title_activity_welcome" >
@@ -45,7 +44,11 @@
         <service
             android:name="com.punventure.punadventure.svc.NoteRetrievalService"
             android:exported="false" />
-        
+
+        <activity
+            android:name="com.punventure.punadventure.VoiceRecordActivity"
+            android:label="@string/title_activity_voice_record" >
+        </activity>
     </application>
 
 </manifest>
