@@ -5,24 +5,41 @@
     tools:context="com.punventure.punadventure.SoundPlayActivity$PlaceholderFragment" >
 
     <ImageView
-        android:id="@+id/play_pause_button"
+        android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="30dp"
         android:src="@drawable/playback_icon" />
+
+    <ImageView
+        android:id="@+id/pause_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/play_button"
+        android:layout_toRightOf="@+id/play_button"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/pause_playback_icon" />
 
     <ImageView
         android:id="@+id/stop_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_alignTop="@+id/pause_button"
+        android:layout_toRightOf="@+id/pause_button"
+        android:layout_marginLeft="20dp"
         android:src="@drawable/stop_playback_icon" />
+
+    <ImageView
+        android:id="@+id/reset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/stop_button"
+        android:layout_toRightOf="@+id/stop_button"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/reset_playback_icon" />
 
     <ImageView
         android:id="@+id/blue_rect"
