@@ -30,10 +30,17 @@ public class NoteRetrievalService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         OttoBus.register(this);
+        
+        //FIXME TEST DATA
+        allNotes.add(new Note("note 1"));
+        allNotes.add(new Note("note 2"));
+        allNotes.add(new Note("note 3"));
+        OttoBus.publish(new NotesEvent(allNotes));
+
         return new NoteRetrievalServiceBinder();
     }
 
-    @Subscribe void onLocationChanged(Location location) {
+    @Subscribe public void onLocationChanged(Location location) {
         new NoteRetrievalTask().execute(location);
     }
 

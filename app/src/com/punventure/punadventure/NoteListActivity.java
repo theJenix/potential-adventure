@@ -1,16 +1,16 @@
 package com.punventure.punadventure;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 
 import com.punventure.punadventure.event.NoteSelectedEvent;
-import com.punventure.punadventure.event.NotesEvent;
-import com.punventure.punadventure.model.Note;
 import com.punventure.punadventure.model.OttoBus;
+import com.punventure.punadventure.svc.NoteRetrievalService;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -28,7 +28,7 @@ import com.squareup.otto.Subscribe;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends FragmentActivity {
+public class NoteListActivity extends FragmentActivity implements ServiceConnection {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -41,6 +41,11 @@ public class NoteListActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
 
+        OttoBus.register(this);
+        
+        Intent service = new Intent(this, NoteRetrievalService.class);
+        bindService(service, this, Context.BIND_AUTO_CREATE);
+        
         if (findViewById(R.id.note_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -53,21 +58,8 @@ public class NoteListActivity extends FragmentActivity {
             ((NoteListFragment) getSupportFragmentManager().findFragmentById(
                     R.id.note_list)).setActivateOnItemClick(true);
         }
-
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        
-        //FIXME TEST DATA
-        List<Note> notes = new ArrayList<Note>();
-        notes.add(new Note("note 1"));
-        notes.add(new Note("note 2"));
-        notes.add(new Note("note 3"));
-        OttoBus.publish(new NotesEvent(notes));
-    }
     /**
      * Callback method from {@link NoteListFragment.Callbacks} indicating that
      * the item with the given ID was selected.
@@ -91,5 +83,18 @@ public class NoteListActivity extends FragmentActivity {
             detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, event.getNote().getId());
             startActivity(detailIntent);
         }
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+//        if (name.equals(NoteRetrievalService.class.getName())) {
+//            
+//        }
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        // TODO Auto-generated method stub
+        
     }
 }

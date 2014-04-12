@@ -33,8 +33,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.punventure.punadventure.NoteListActivity" />
         </activity>
-        <service android:name="com.punventure.punadventure.LocationService" android:exported="false" />
-        <service android:name="com.punventure.punadventure.NoteRetrievalService" android:exported="false" />
+        <service android:name="com.punventure.punadventure.svc.LocationService" android:exported="false" />
+        <service android:name="com.punventure.punadventure.svc.NoteRetrievalService" android:exported="false" />
         
     </application>
 
