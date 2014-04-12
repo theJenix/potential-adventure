@@ -4,7 +4,7 @@ Site::Application.routes.draw do
 
   post 'notesapp' => 'notes#create_app'
   post 'notes/:id/image' => 'notes#image'
-  post 'notes/:id/voice' => 'notes#voice'
+  post 'notes/:id/audio' => 'notes#audio'
 
   get 'noteshack' => 'notes#index_hack'
 
