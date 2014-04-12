@@ -1,11 +1,15 @@
 package com.punventure.punadventure;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import roboguice.activity.RoboFragmentActivity;
+import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
-import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class PhotoViewActivity extends Activity {
+public class PhotoViewActivity extends RoboFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,7 @@ public class PhotoViewActivity extends Activity {
 		setContentView(R.layout.activity_photo_view);
 
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
+			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
@@ -50,7 +54,7 @@ public class PhotoViewActivity extends Activity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends RoboFragment {
 		
 	    @InjectView(R.id.photo_viewer) ImageView photoViewer;
 	    @InjectView(R.id.back_button) ImageView backButton;
@@ -69,10 +73,20 @@ public class PhotoViewActivity extends Activity {
 	    public void onViewCreated(View view, Bundle savedInstanceState) {
 	        super.onViewCreated(view, savedInstanceState);
 	        
-	        String photoPath = savedInstanceState.getString("imagePath");
+	        String photoPath = getActivity().getIntent().getStringExtra("imagePath");
+	        //HAXX
+	        String photoName = photoPath.substring(photoPath.lastIndexOf("/") + 1);
+	        FileInputStream is = null;
+	        try {
+                is = getActivity().openFileInput(photoName);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                Log.wtf("PhotoViewActivity", e);
+                getActivity().finish();
+            }
 	        BitmapFactory.Options options = new BitmapFactory.Options();
 	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-	        Bitmap bitmap = BitmapFactory.decodeFile(photoPath, options);
+	        Bitmap bitmap = BitmapFactory.decodeStream(is);
 	        
             photoViewer.setImageBitmap(bitmap);
 	        

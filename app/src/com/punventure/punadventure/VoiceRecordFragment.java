@@ -25,8 +25,8 @@ public class VoiceRecordFragment extends RoboFragment {
     @InjectView(R.id.record_time_display) Chronometer counter;
     @InjectView(R.id.start_playback) ImageView playbackButton;
     @InjectView(R.id.end_playback) ImageView playbackStopButton;
-    @InjectView(R.id.start_recording_button) Button recButton;
-    @InjectView(R.id.end_recording_button) Button recStopButton;
+    @InjectView(R.id.start_recording_button) ImageView recButton;
+    @InjectView(R.id.end_recording_button) ImageView recStopButton;
     @InjectView(R.id.accept_button) ImageView addVoiceButton;
     @InjectView(R.id.cancel_button) ImageView cancelVoiceButton;
 
@@ -80,21 +80,21 @@ public class VoiceRecordFragment extends RoboFragment {
             }
         });
         
-//        addVoiceButton.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                finalizeRecording(view);
-//            }
-//        });
-//        
-//        cancelVoiceButton.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                cancelRecording(view);
-//            }
-//        });
+        addVoiceButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finalizeRecording(view);
+            }
+        });
+        
+        cancelVoiceButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                cancelRecording(view);
+            }
+        });
     }
 
     public void startRecording(View v) {
@@ -150,14 +150,26 @@ public class VoiceRecordFragment extends RoboFragment {
     }
 
     public void stopPlayback(View v) {
-        if (mRecorder == null) {
+        if (mRecorder != null) {
             mPlayer.stop();
-            mPlayer.release();
-            mPlayer = null;
+            try {
+            	mPlayer.prepare();
+            } catch (IOException e) {
+                Log.e("AUDIO", "player prepare() failed");
+            }
         }
     }
     
     public void finalizeRecording(View v) {
+        if (mRecorder != null) {
+        	mRecorder.release();
+        	mRecorder = null;
+        }
+        if (mPlayer != null) {
+        	mPlayer.release();
+        	mPlayer = null;
+        }
+        
         Activity act = this.getActivity();
         if (fileName == null) {
             new AlertDialog.Builder(act)
@@ -174,6 +186,15 @@ public class VoiceRecordFragment extends RoboFragment {
     }
     
     public void cancelRecording(View v) {
+        if (mRecorder != null) {
+        	mRecorder.release();
+        	mRecorder = null;
+        }
+        if (mPlayer != null) {
+        	mPlayer.release();
+        	mPlayer = null;
+        }
+        
         Activity act = this.getActivity();
         Intent i = act.getIntent();
         act.setResult(Activity.RESULT_CANCELED, i);

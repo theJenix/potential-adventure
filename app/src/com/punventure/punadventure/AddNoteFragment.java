@@ -89,12 +89,12 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
     public void onServiceConnected(ComponentName name, IBinder binder) {
         LocationService service = ((LocationServiceBinder) binder).getService();
         this.location = service.getCurrentLocation();
-        if (this.latView != null) {
+        if (this.latView != null && location != null) {
             this.latView.setText((location.getLatitude() >= 0 ? "N" : "S")
                     + formatLatLon(Math.abs(location.getLatitude())));
         }
 
-        if (this.lonView != null) {
+        if (this.lonView != null && location != null) {
             this.lonView.setText((location.getLongitude() >= 0 ? "E" : "W")
                     + formatLatLon(Math.abs(location.getLongitude())));
         }
@@ -134,7 +134,7 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
 
     
     public void startVoiceActivity(View v) {
-        startActivityForResult(new Intent(getActivity(), VoiceRecordActivity.class), 1);       
+        startActivityForResult(new Intent(getActivity(), VoiceRecordActivity.class), CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE);       
     }
     
     Uri cameraFileUri = null;

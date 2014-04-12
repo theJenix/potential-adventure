@@ -70,11 +70,20 @@ public class NoteRetrievalService extends Service {
             List<Note> notes;
             Location location = aparams[0];
             try {
-                GsonClient client = new GsonClient();
+                GsonClient client = new GsonClient(NoteRetrievalService.this);
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("lat", location.getLatitude());
                 params.put("lon", location.getLongitude());
                 notes = new ArrayList<Note>(client.list(Note.class, params));
+                for (Note note : notes) {
+                    if (note.getImage_path() != null && !note.getImage_path().isEmpty()) {
+                        try {
+                            note.setImage_path(client.fetchImage(note.getImage_path()));
+                        } catch (IOException e) {
+                            note.setImage_path("");
+                        }
+                    }
+                }
             } catch (IOException e) {
                 Log.wtf(TAG, e);
                 //if we get an io exception, just reuse the existing notes

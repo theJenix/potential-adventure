@@ -37,7 +37,7 @@ public class NoteSaveService extends Service {
 
             @Override
             protected Void doInBackground(Void... params) {
-                GsonClient client = new GsonClient();
+                GsonClient client = new GsonClient(NoteSaveService.this);
                 Note note = event.getNote();
                 client.post(note);
                 if (note.getAudio_path() != null) {
