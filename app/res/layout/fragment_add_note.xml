@@ -81,41 +81,23 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/to_label"
+    <CheckBox
+        android:id="@+id/private_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/latitude_display"
         android:layout_below="@+id/black_rect"
         android:layout_marginTop="17dp"
-        android:text="To:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <RadioButton
-        android:id="@+id/everyone_radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/to_label"
-        android:layout_toRightOf="@+id/to_label"
-        android:layout_marginTop="-5dp"
-        android:text="Everyone" />
-
-    <RadioButton
-        android:id="@+id/private_radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/everyone_radio"
-        android:layout_below="@+id/everyone_radio"
         android:text="Private" />
 
     <EditText
         android:id="@+id/private_name_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/private_radio"
+        android:layout_alignBottom="@+id/private_checkbox"
+        android:layout_alignLeft="@+id/private_checkbox"
         android:layout_marginLeft="85dp"
         android:layout_marginRight="15dp"
-        android:layout_below="@+id/everyone_radio"
         android:ems="10" >
     </EditText>
 
@@ -123,7 +105,7 @@
         android:id="@+id/title_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/to_label"
+        android:layout_alignLeft="@+id/private_checkbox"
         android:layout_below="@+id/private_name_field"
         android:layout_marginTop="10dp"
         android:text="Title:"
@@ -155,10 +137,10 @@
         android:id="@+id/message_text_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/text_label"
         android:layout_alignLeft="@+id/text_label"
         android:layout_alignParentRight="true"
         android:layout_marginRight="75dp"
-        android:layout_centerVertical="true"
         android:ems="10"
         android:inputType="textMultiLine" />
 
