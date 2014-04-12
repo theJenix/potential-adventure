@@ -54,7 +54,7 @@
             }
 
             if (note.image_path != "") {
-              audio = "<img src='" + note.image_path + "' ></img>";
+              pic = "<img src='" + note.image_path + "' ></img>";
             }
 
             var content = '<div class="infoWindow">'+
@@ -64,7 +64,7 @@
               '<h2 class="names">From: ' + note.sender + '</h2>'+
               '<h2 class="names">To: ' + note.recipient + '</h2>'+
               '<div id="bodyContent">'+
-                '<p>' + note.note + '</p>'+ audio +
+                '<p>' + note.note + '</p>'+ pic + audio +
               '</div>'+
               '</div>';
 
