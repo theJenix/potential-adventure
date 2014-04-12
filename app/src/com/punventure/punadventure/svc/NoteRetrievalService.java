@@ -1,7 +1,10 @@
 package com.punventure.punadventure.svc;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Service;
 import android.content.Intent;
@@ -10,7 +13,9 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.punventure.punadventure.event.LocationEvent;
 import com.punventure.punadventure.event.NotesEvent;
+import com.punventure.punadventure.event.RequestLocationEvent;
 import com.punventure.punadventure.model.Note;
 import com.punventure.punadventure.model.OttoBus;
 import com.squareup.otto.Subscribe;
@@ -32,36 +37,42 @@ public class NoteRetrievalService extends Service {
         OttoBus.register(this);
         
         //FIXME TEST DATA
-        allNotes.add(new Note("note 1"));
-        allNotes.add(new Note("note 2"));
-        allNotes.add(new Note("note 3"));
-        OttoBus.publish(new NotesEvent(allNotes));
+//        allNotes.add(new Note("note 1"));
+//        allNotes.add(new Note("note 2"));
+//        allNotes.add(new Note("note 3"));
+//        OttoBus.publish(new NotesEvent(allNotes));
 
+        OttoBus.publish(new RequestLocationEvent());
         return new NoteRetrievalServiceBinder();
     }
 
-    @Subscribe public void onLocationChanged(Location location) {
-        new NoteRetrievalTask().execute(location);
+    @Subscribe public void onLocationChanged(LocationEvent event) {
+        new NoteRetrievalTask().execute(event.getLocation());
     }
 
     private class NoteRetrievalTask extends AsyncTask<Location, Void, List<Note>> {
 
-        
         @Override
-        protected List<Note> doInBackground(Location... params) {
-            //params[0]
-            //send to server
-            Location location = params[0];
-            List<Note> notes = new ArrayList<Note>();
+        protected List<Note> doInBackground(Location... aparams) {
+            List<Note> notes;
+            Location location = aparams[0];
+            try {
+                GsonClient client = new GsonClient();
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("lat", location.getLatitude());
+                params.put("lon", location.getLongitude());
+                notes = client.list(Note.class, params);
+            } catch (IOException e) {
+                notes = new ArrayList<Note>();
+            }
             notes.addAll(allNotes);
-            return filterNotes(allNotes, location);
+            return filterNotes(notes, location);
         }
         
         @Override
         protected void onPostExecute(List<Note> result) {
-            List<Note> newNotes = new ArrayList<Note>();
             //add all the new notes to the list, and then filter by location, and post the results
-            allNotes = newNotes;
+            allNotes = result;
             OttoBus.publish(new NotesEvent(allNotes));
         }
         
@@ -79,6 +90,8 @@ public class NoteRetrievalService extends Service {
     }
 
     private boolean withinRange(Note note, Location location) {
+        
+        //TODO:
         return true;
     }
 
