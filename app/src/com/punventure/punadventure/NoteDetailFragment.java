@@ -33,6 +33,7 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
     @InjectView(R.id.show_photo_button) ImageView photoButton;
     @InjectView(R.id.latitude_display) TextView latView;
     @InjectView(R.id.longitude_display) TextView lonView;
+    @InjectView(R.id.back_button) TextView backButton;
 
     /**
      * The fragment argument representing the item ID that this fragment
@@ -90,7 +91,16 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
             	intent.putExtra("imagePath", note.getImage_path());
             	startActivity(intent);
             }
-        }); 
+        });
+        
+        backButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	getActivity().finish();
+            }
+        });
+        
+        
     }
 
     @Override
