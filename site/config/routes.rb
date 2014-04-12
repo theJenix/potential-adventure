@@ -1,9 +1,14 @@
 Site::Application.routes.draw do
   resources :notes
 
+  post 'notes/:id/image' => 'notes#image'
+  post 'notes/:id/voice' => 'notes#voice'
+
   get 'noteshack' => 'notes#index_hack'
 
   resources :users
+
+  get "/audio" => redirect("/audio")
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -27,6 +27,17 @@ class NotesController < ApplicationController
     end
   end
 
+  def image
+    n = Note.find(params[:id])
+    name = params[:upload][:file].original_filename
+    directory = "public/images"
+    path = File.join(directory, name)
+    File.open(path, "wb") { |f| f.write(params[:upload][:file].read) }
+    n.image_path = directory + "/" + name
+    n.save();
+  end
+
+
   # GET /notes/1
   # GET /notes/1.json
   def show
