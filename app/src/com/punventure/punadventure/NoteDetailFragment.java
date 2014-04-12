@@ -1,5 +1,6 @@
 package com.punventure.punadventure;
 
+import roboguice.inject.InjectView;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +11,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.punventure.punadventure.model.Note;
+import com.punventure.punadventure.model.Settings;
 import com.punventure.punadventure.svc.NoteRetrievalService;
 import com.punventure.punadventure.svc.NoteRetrievalService.NoteRetrievalServiceBinder;
 
@@ -22,6 +26,10 @@ import com.punventure.punadventure.svc.NoteRetrievalService.NoteRetrievalService
  * {@link NoteDetailActivity} on handsets.
  */
 public class NoteDetailFragment extends Fragment implements ServiceConnection {
+	
+    @InjectView(R.id.play_audio_button) ImageView audioButton;
+    @InjectView(R.id.show_photo_button) ImageView photoButton;
+    
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -54,6 +62,25 @@ public class NoteDetailFragment extends Fragment implements ServiceConnection {
             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_note_detail,
                 container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        
+        audioButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        }); 
+        
+        photoButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        }); 
     }
 
     @Override

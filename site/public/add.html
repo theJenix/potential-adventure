@@ -46,19 +46,34 @@
       }
 
       google.maps.event.addDomListener(window, 'load', initialize);
+
+      $( document ).ready(function() {
+        $("#newNote").submit(function(event) {
+          event.preventDefault();
+          alert("Testing");
+          var tit = $("#tit").val();
+          var msg = $("#msg").val();
+          var nme = $("#nme").val();
+          var rng = $("#rng").val();
+          var lat = $("#lat").val();
+          var lon = $("#lon").val();
+
+          $.post( "http://punadv.herokuapp.com/notes", { title: tit, note: msg, audio_path: "", latitude: parseFloat(lat), longitude: parseFloat(lon), sender: nme, recipient: "", visible_range: parseInt(rng), image_path: ""})
+        });
+      }
     </script>
   </head>
   <body>
     <div id="map-canvas"></div>
     <div id="nav">
-      <form class="pure-form">
+      <form class="pure-form" id="newNote">
         <fieldset>
           <legend>Add a new note! Click on the map to select the location.</legend>
 
-          <input type="text" placeholder="Title"/>
-          <input type="text" placeholder="Note"/>
-          <input type="text" placeholder="Your Name"/>
-          <input type="number" placeholder="Detection Range (m)"/>
+          <input type="text" placeholder="Title" id="tit"/>
+          <input type="text" placeholder="Note" id="msg"/>
+          <input type="text" placeholder="Your Name" id="nme"/>
+          <input type="number" placeholder="Detection Range (m)" id="rng"/>
           <input type="hidden" id="lat"/>
           <input type="hidden" id="lon"/>
 
