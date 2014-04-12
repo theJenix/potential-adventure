@@ -1,15 +1,18 @@
 package com.punventure.punadventure;
 
+import roboguice.inject.InjectView;
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ImageView;
 
 public class PhotoViewActivity extends Activity {
 
@@ -48,6 +51,9 @@ public class PhotoViewActivity extends Activity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+		
+	    @InjectView(R.id.photo_viewer) ImageView photoViewer;
+	    @InjectView(R.id.back_button) ImageView backButton;
 
 		public PlaceholderFragment() {
 		}
@@ -59,6 +65,24 @@ public class PhotoViewActivity extends Activity {
 					container, false);
 			return rootView;
 		}
+		
+	    public void onViewCreated(View view, Bundle savedInstanceState) {
+	        super.onViewCreated(view, savedInstanceState);
+	        
+	        String photoPath = savedInstanceState.getString("imagePath");
+	        BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+	        Bitmap bitmap = BitmapFactory.decodeFile(photoPath, options);
+	        
+            photoViewer.setImageBitmap(bitmap);
+	        
+	        backButton.setOnClickListener(new OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	getActivity().finish();
+	            }
+	        });
+	    }
 	}
 
 }

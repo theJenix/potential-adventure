@@ -10,13 +10,12 @@ import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.punventure.punadventure.model.Note;
-import com.punventure.punadventure.model.Settings;
 import com.punventure.punadventure.svc.NoteRetrievalService;
 import com.punventure.punadventure.svc.NoteRetrievalService.NoteRetrievalServiceBinder;
 
@@ -71,14 +70,18 @@ public class NoteDetailFragment extends Fragment implements ServiceConnection {
         audioButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            	Intent intent = new Intent(getActivity(), SoundPlayActivity.class);
+            	intent.putExtra("audioPath", note.getAudioPath());
+            	startActivity(intent);
             }
         }); 
         
         photoButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            	Intent intent = new Intent(getActivity(), PhotoViewActivity.class);
+            	intent.putExtra("imagePath", note.getImagePath());
+            	startActivity(intent);
             }
         }); 
     }
