@@ -2,6 +2,7 @@ Site::Application.routes.draw do
   get 'notes.json' => 'notes#index_json'
   resources :notes
 
+  post 'notesapp' => 'notes#create_app'
   post 'notes/:id/image' => 'notes#image'
   post 'notes/:id/voice' => 'notes#voice'
 
