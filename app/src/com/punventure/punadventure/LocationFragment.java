@@ -50,12 +50,20 @@ public class LocationFragment extends RoboFragment implements ServiceConnection 
 
     @Subscribe public void onLocationChanged(LocationEvent event) {
         if (this.latView != null) {
-            this.latView.setText(Location.convert(event.getLocation().getLatitude(),  Location.FORMAT_SECONDS));
+            this.latView.setText(formatLatLon(event.getLocation().getLatitude()));
         }
         
         if (this.lonView != null) {
-            this.lonView.setText(Location.convert(event.getLocation().getLongitude(), Location.FORMAT_SECONDS));
+            this.lonView.setText(formatLatLon(event.getLocation().getLongitude()));
         }
+    }
+
+    private String formatLatLon(double latlon) {
+        String str = Location.convert(latlon,  Location.FORMAT_SECONDS);
+        if (str.indexOf(".") >= 0) {
+            str = str.substring(0, str.indexOf(".") + 2);
+        }
+        return str;
     }
 
     @Subscribe public void onLocationAvailabilityChanged(LocationAvailableEvent event) {
