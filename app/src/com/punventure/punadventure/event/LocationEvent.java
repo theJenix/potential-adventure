@@ -8,8 +8,8 @@ public class LocationEvent {
 
     public LocationEvent(Location location) {
         this.location = location;
-        // TODO Auto-generated constructor stub
     }
+
     public Location getLocation() {
         return location;
     }

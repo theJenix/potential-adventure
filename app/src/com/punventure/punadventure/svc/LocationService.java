@@ -29,6 +29,8 @@ public class LocationService extends Service {
     private static final long MIN_UPDATE_TIME = 1 * 1000; //milliseconds
 
     private static final float MIN_UPDATE_DISTANCE = 0;
+    
+//    private static final long STALE_TIME = 309 
 
     private LocationManager locationManager;
 
