@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.punventure.punadventure.model.Settings;
@@ -18,7 +18,7 @@ public class WelcomeFragment extends RoboFragment {
     @InjectView(R.id.username_label) TextView usernameLabel;
     @InjectView(R.id.name_field) TextView nameView;
     @InjectView(R.id.salutations_field) TextView salutationsView;
-    @InjectView(R.id.enter_button) Button enterButton;
+    @InjectView(R.id.enter_button) ImageView enterButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
