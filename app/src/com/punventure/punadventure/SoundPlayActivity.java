@@ -1,9 +1,13 @@
 package com.punventure.punadventure;
 
+import java.io.IOException;
+
 import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.app.Fragment;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,9 +54,13 @@ public class SoundPlayActivity extends Activity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 		
-	    @InjectView(R.id.play_pause_button) ImageView playPauseButton;
+	    @InjectView(R.id.play_button) ImageView playButton;
+	    @InjectView(R.id.pause_button) ImageView pauseButton;
 	    @InjectView(R.id.stop_button) ImageView stopButton;
+	    @InjectView(R.id.reset_button) ImageView resetButton;
 	    @InjectView(R.id.back_button) ImageView backButton;
+	    
+	    MediaPlayer mPlayer = null;
 
 		public PlaceholderFragment() {
 		}
@@ -68,26 +76,49 @@ public class SoundPlayActivity extends Activity {
 	    public void onViewCreated(View view, Bundle savedInstanceState) {
 	        super.onViewCreated(view, savedInstanceState);
 	        
-	        playPauseButton.setOnClickListener(new OnClickListener() {
+            mPlayer = new MediaPlayer();
+            try {
+                mPlayer.setDataSource(savedInstanceState.getString("audioPath"));
+                mPlayer.prepare();
+            } catch (IOException e) {
+                Log.e("AUDIO", "player prepare() failed");
+            }
+	        
+	        playButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	
+	            	mPlayer.start();
+	            }
+	        });
+	        
+	        pauseButton.setOnClickListener(new OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	mPlayer.pause();
 	            }
 	        });
 	        
 	        stopButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	
+	            	mPlayer.stop();
 	            }
 	        });
 	        
-	        stopButton.setOnClickListener(new OnClickListener() {
+	        resetButton.setOnClickListener(new OnClickListener() {
 	            @Override
 	            public void onClick(View v) {
-	            	
+	            	mPlayer.reset();
 	            }
-	        }); 
+	        });
+	        
+	        backButton.setOnClickListener(new OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	mPlayer.release();
+	            	getActivity().finish();
+	            }
+	        });
 	    }
 	}
 
