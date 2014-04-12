@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @note.id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @note.title %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @note.note %>
+</p>
+
+<p>
+  <strong>Audio path:</strong>
+  <%= @note.audio_path %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @note.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @note.longitude %>
+</p>
+
+<p>
+  <strong>Sender:</strong>
+  <%= @note.sender %>
+</p>
+
+<p>
+  <strong>Recipient:</strong>
+  <%= @note.recipient %>
+</p>
+
+<p>
+  <strong>Visible range:</strong>
+  <%= @note.visible_range %>
+</p>
+
+<%= link_to 'Edit', edit_note_path(@note) %> |
+<%= link_to 'Back', notes_path %>
