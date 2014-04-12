@@ -20,10 +20,10 @@
         var map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
 
-        makeMarkers();
+        makeMarkers(map);
       }
 
-      function makeMarkers() {
+      function makeMarkers(map) {
         $.getJSON("http://punadv.herokuapp.com/notes.json", function(data) {
           $.each(data, function(index, note) {
             var marker = new google.maps.Marker({
