@@ -49,7 +49,7 @@
         android:onClick="stopRecording" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/longitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -69,7 +69,7 @@
         android:id="@+id/start_playback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextView01"
+        android:layout_below="@+id/longitude_label"
         android:layout_marginTop="27dp"
         android:layout_toLeftOf="@+id/record_time_display"
         android:src="@drawable/playback_icon" />
