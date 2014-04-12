@@ -30,19 +30,8 @@
       }
 
       function makeMarkers() {
-        $.ajax({
-          url: 'http://punadv.herokuapp.com/notes.json',
-          type: 'GET',
-          dataType: 'text',
-        })
-        .done(function() {
-          console.log("success");
-        })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
+        $.getJSON("punadv.herokuapp.com/notes.json", function(data) {
+          console.log(data);
         });
       }
 
