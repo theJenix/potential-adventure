@@ -7,7 +7,7 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 85% }
+      #map-canvas { height: 100% }
       h2.names {
         margin: 0;
       }
@@ -16,9 +16,20 @@
         margin-bottom: 5px;
       }
       #nav {
-        height: 15%;
-        padding-left: 10px;
-        padding-top: 10px;
+        position: absolute;
+        height: 85px;
+        left: 10px;
+        bottom: 10px;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 0 10px;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        border-radius: 7px;
+      }
+
+      legend {
+        color: white !important;
+        text-shadow: -1px -1px #333;
       }
 
     </style>
@@ -78,6 +89,7 @@
           <input type="hidden" id="lon"/>
 
           <button type="submit" class="pure-button pure-button-primary">Create</button>
+          <a href="http://punadv.herokuapp.com" class="pure-button button-error">Cancel</a>
         </fieldset>
       </form>
     </div>
