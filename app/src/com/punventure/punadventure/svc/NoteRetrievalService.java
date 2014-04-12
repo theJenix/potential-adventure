@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.punventure.punadventure.event.LocationEvent;
+import com.punventure.punadventure.event.NoteSavedEvent;
 import com.punventure.punadventure.event.NotesEvent;
 import com.punventure.punadventure.event.RequestLocationEvent;
 import com.punventure.punadventure.event.RequestNotesEvent;
@@ -37,6 +38,7 @@ public class NoteRetrievalService extends Service {
     private boolean notifyDelta = false;
     private List<Note> allNotes = new ArrayList<Note>();
     private Location location;
+    private boolean inTask;
     
     @Override
     public IBinder onBind(Intent intent) {
@@ -58,9 +60,17 @@ public class NoteRetrievalService extends Service {
     }
 
     @Subscribe public void onRequestNotes(RequestNotesEvent event) {
-    	if (location != null) {
+    	if (location != null && !inTask) {
+    	    inTask = true;
     		new NoteRetrievalTask().execute(this.location);
     	}
+    }
+
+    @Subscribe public void onNoteSaved(NoteSavedEvent event) {
+        if (location != null && !inTask) {
+            inTask = true;
+            new NoteRetrievalTask().execute(this.location);
+        }
     }
 
     private class NoteRetrievalTask extends AsyncTask<Location, Void, List<Note>> {
@@ -110,6 +120,7 @@ public class NoteRetrievalService extends Service {
             OttoBus.publish(new NotesEvent(allNotes));
             //all new changes, notify
             notifyDelta = true;
+            inTask = false;
         }
 
         private boolean isDelta(List<Note> result, List<Note> allNotes) {
