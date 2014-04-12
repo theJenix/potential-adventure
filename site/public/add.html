@@ -39,6 +39,8 @@
             marker.setMap(null);
           }
           marker = new google.maps.Marker({position: event.latLng, map: map});
+          $("#lat").val(event.latLng.lat());
+          $("#lon").val(event.latLng.lng());
         });
       }
 
@@ -52,10 +54,12 @@
         <fieldset>
           <legend>Add a new note.</legend>
 
-          <input type="text" placeholder="Title">
-          <input type="text" placeholder="Note">
-          <input type="text" placeholder="Your Name">
-          <input type="Number" placeholder="Detection Range (m)">
+          <input type="text" placeholder="Title"/>
+          <input type="text" placeholder="Note"/>
+          <input type="text" placeholder="Your Name"/>
+          <input type="number" placeholder="Detection Range (m)"/>
+          <input type="hidden" id="lat"/>
+          <input type="hidden" id="lon"/>
 
           <button type="submit" class="pure-button pure-button-primary">Create</button>
         </fieldset>
