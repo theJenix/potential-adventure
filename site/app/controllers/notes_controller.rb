@@ -79,13 +79,13 @@ class NotesController < ApplicationController
   end
 
   def create_app
-    choices = params.select { |key, value| key.to_s != "id" and key.to_s != "action" and key.to_s != "controller" }
+    choices = params.select { |key, value| key.to_s != "id" and key.to_s != "action" and key.to_s != "controller" and key.to_s != "format" }
     @note = Note.new(choices)
 
     respond_to do |format|
       if @note.save
         format.html { redirect_to @note, notice: 'Note was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @note }
+        format.json { render json: @note }
       else
         format.html { render action: 'new' }
         format.json { render json: @note.errors, status: :unprocessable_entity }

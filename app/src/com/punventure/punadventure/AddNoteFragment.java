@@ -125,7 +125,7 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
         } else {
             newNote.setRecipient("");
         }
-        newNote.setVisibleRange(50); //default 50 meters
+        newNote.setVisible_range(50); //default 50 meters
         OttoBus.publish(new SaveNoteEvent(newNote));
     }    
 
@@ -156,12 +156,12 @@ public class AddNoteFragment extends RoboFragment implements ServiceConnection {
             switch (requestCode) {
             case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
                 Log.d("Return", cameraFileUri.toString());
-                newNote.setImagePath(cameraFileUri.getPath());
+                newNote.setImage_path(cameraFileUri.getPath());
                 break;
             case CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE:
                 Log.d("Return", "Clear");
                 Log.d("Return", data.getStringExtra("fileName"));
-                newNote.setAudioPath(data.getStringExtra("fileName"));
+                newNote.setAudio_path(data.getStringExtra("fileName"));
                 break;
             }
         }

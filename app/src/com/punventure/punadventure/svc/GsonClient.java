@@ -1,6 +1,5 @@
 package com.punventure.punadventure.svc;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,8 +10,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -29,6 +26,7 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.punventure.punadventure.model.Note;
 
 @SuppressLint("DefaultLocale")
 public class GsonClient {
@@ -56,12 +54,12 @@ public class GsonClient {
         return Arrays.asList(objects);
     }
 
-    public <T> void post(T obj) {
+    public <T> void post(Note obj) {
         HttpURLConnection connection = null;
         try {
             Gson gson = new Gson();
             String json = gson.toJson(obj);
-            URL url = new URL("http://" + host + "/" + resourceName(obj.getClass()));
+            URL url = new URL("http://" + host + "/notesapp.json");
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
@@ -70,35 +68,23 @@ public class GsonClient {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.getOutputStream().write(json.getBytes());
             connection.connect();
-            connection.getResponseCode();
+//            if (connection.getResponseCode() != 302) {
+//                Log.wtf(TAG, "no redirect!?  denied!");
+//                return;
+//            }
+//            String redir = connection.getHeaderField("Location");
+//            String id = redir.substring(redir.lastIndexOf("/") + 1);
             InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-            BufferedReader br = new BufferedReader(reader);
-            Pattern p = Pattern.compile("Id: (\\d*)");
-            while (br.ready()) {
-                String line = br.readLine();
-                Matcher m = p.matcher(line);
-                if (m.find()) {
-                    int id = Integer.valueOf(m.group(1));
-                    obj.getClass().getMethod("id", long.class).invoke(obj, id);
-                    break;
-                }
-            }
+            Note ret = gson.fromJson(reader, Note.class);
+            obj.setId(ret.getId());
             // this.retries = 0;
         } catch (IOException ex) {
             // this.retries++;
             // if (this.retries >= 5) {
             throw new RuntimeException(ex);
             // }
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
