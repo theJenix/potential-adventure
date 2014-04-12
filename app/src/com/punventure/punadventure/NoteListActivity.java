@@ -1,18 +1,24 @@
 package com.punventure.punadventure;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import roboguice.activity.RoboFragmentActivity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
 import com.punventure.punadventure.event.LocationAvailableEvent;
+import com.punventure.punadventure.event.LocationEvent;
 import com.punventure.punadventure.event.NoteSelectedEvent;
+import com.punventure.punadventure.event.RequestNotesEvent;
 import com.punventure.punadventure.model.OttoBus;
 import com.punventure.punadventure.svc.NoteRetrievalService;
 import com.squareup.otto.Subscribe;
@@ -39,6 +45,8 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
      * device.
      */
     private boolean mTwoPane;
+    private TimerTask refreshTask;
+    private Timer refreshTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,8 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
         Intent service = new Intent(this, NoteRetrievalService.class);
         bindService(service, this, Context.BIND_AUTO_CREATE);
         
+        setRefreshTimer();
+
         if (findViewById(R.id.note_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -62,10 +72,31 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
             ((NoteListFragment) getSupportFragmentManager().findFragmentById(
                     R.id.note_list)).setActivateOnItemClick(true);
         }
-
-        
     }
     
+    private synchronized void setRefreshTimer() {
+        if (this.refreshTimer != null) {
+            this.refreshTimer.cancel();
+            this.refreshTimer = null;
+        }
+        this.refreshTimer = new Timer();
+        final Handler handler = new Handler();
+        this.refreshTask = new TimerTask() {
+            
+            @Override
+            public void run() {
+                OttoBus.publishOnMain(handler, new RequestNotesEvent());
+            }
+        };
+        
+        this.refreshTimer.schedule(refreshTask, 0, 10*1000);   
+    }
+
+    @Subscribe public void onLocationChanged(LocationEvent event) {
+        //restart the timer
+        setRefreshTimer();
+    }
+
     public void startAct(View v) {
         startActivityForResult(new Intent(this, VoiceRecordActivity.class), 1);    	
     }
