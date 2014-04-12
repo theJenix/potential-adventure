@@ -3,5 +3,9 @@
 
     <string name="app_name">PunAdventure</string>
     <string name="title_note_detail">Note Detail</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_voice_record">VoiceRecordActivity</string>
 
 </resources>

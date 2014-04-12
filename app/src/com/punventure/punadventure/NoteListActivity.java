@@ -1,8 +1,19 @@
 package com.punventure.punadventure;
 
+import roboguice.activity.RoboFragmentActivity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.os.IBinder;
+import android.provider.Settings;
+
+import com.punventure.punadventure.event.LocationAvailableEvent;
+import com.punventure.punadventure.event.NoteSelectedEvent;
+import com.punventure.punadventure.model.OttoBus;
+import com.punventure.punadventure.svc.NoteRetrievalService;
+import com.squareup.otto.Subscribe;
 
 /**
  * An activity representing a list of Notes. This activity has different
@@ -19,8 +30,7 @@ import android.support.v4.app.FragmentActivity;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends FragmentActivity implements
-        NoteListFragment.Callbacks {
+public class NoteListActivity extends RoboFragmentActivity implements ServiceConnection {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -33,6 +43,11 @@ public class NoteListActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
 
+        OttoBus.register(this);
+        
+        Intent service = new Intent(this, NoteRetrievalService.class);
+        bindService(service, this, Context.BIND_AUTO_CREATE);
+        
         if (findViewById(R.id.note_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -45,22 +60,19 @@ public class NoteListActivity extends FragmentActivity implements
             ((NoteListFragment) getSupportFragmentManager().findFragmentById(
                     R.id.note_list)).setActivateOnItemClick(true);
         }
-
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     /**
      * Callback method from {@link NoteListFragment.Callbacks} indicating that
      * the item with the given ID was selected.
      */
-    @Override
-    public void onItemSelected(String id) {
+    @Subscribe public void onNoteSelected(NoteSelectedEvent event) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(NoteDetailFragment.ARG_ITEM_ID, id);
+            arguments.putLong(NoteDetailFragment.ARG_ITEM_ID, event.getNote().getId());
             NoteDetailFragment fragment = new NoteDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -70,8 +82,28 @@ public class NoteListActivity extends FragmentActivity implements
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, NoteDetailActivity.class);
-            detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, event.getNote().getId());
             startActivity(detailIntent);
+        }
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+//        if (name.equals(NoteRetrievalService.class.getName())) {
+//            
+//        }
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Subscribe public void onLocationAvailabilityChanged(LocationAvailableEvent event) {
+        if (!event.isEnabled()) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
         }
     }
 }
