@@ -1,0 +1,206 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.punventure.punadventure.AddNoteActivity$PlaceholderFragment" >
+
+    <ImageView
+        android:id="@+id/black_rect"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/black_rectangle" />
+
+    <TextView
+        android:id="@+id/latitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:text="Latitude"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/longitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/latitude_label"
+        android:layout_alignBottom="@+id/latitude_label"
+        android:layout_centerHorizontal="true"
+        android:text="Longitude"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/latitude_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/latitude_label"
+        android:layout_below="@+id/latitude_label"
+        android:layout_marginTop="5dp"
+        android:text="Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/longitude_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/longitude_label"
+        android:layout_below="@+id/longitude_label"
+        android:layout_marginTop="5dp"
+        android:text="Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/time_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/time_label"
+        android:layout_below="@+id/time_label"
+        android:layout_marginTop="5dp"
+        android:text="Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/longitude_display"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/longitude_label"
+        android:text="Time"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/to_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/latitude_display"
+        android:layout_below="@+id/black_rect"
+        android:layout_marginTop="17dp"
+        android:text="To:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RadioButton
+        android:id="@+id/everyone_radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/to_label"
+        android:layout_toRightOf="@+id/to_label"
+        android:layout_marginTop="-5dp"
+        android:text="Everyone" />
+
+    <RadioButton
+        android:id="@+id/private_radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/everyone_radio"
+        android:layout_below="@+id/everyone_radio"
+        android:text="Private" />
+
+    <EditText
+        android:id="@+id/private_name_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/private_radio"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/everyone_radio"
+        android:ems="10" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/to_label"
+        android:layout_below="@+id/private_name_field"
+        android:layout_marginTop="10dp"
+        android:text="Title:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/title_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/title_label"
+        android:layout_alignBottom="@+id/title_label"
+        android:layout_alignLeft="@+id/title_label"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/text_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_label"
+        android:layout_marginTop="15dp"
+        android:layout_alignLeft="@+id/title_label"
+        android:text="Text:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/message_text_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_label"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="75dp"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <ImageView
+        android:id="@+id/add_audio_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/message_text_entry"
+        android:src="@drawable/mic_icon" />
+
+    <ImageView
+        android:id="@+id/add_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_audio_button"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/add_audio_button"
+        android:src="@drawable/photo_icon" />
+
+    <ImageView
+        android:id="@+id/blue_rect"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/blue_rectangle" />
+
+    <ImageView
+        android:id="@+id/accept_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/everyone_radio"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/accept_icon" />
+
+    <ImageView
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/accept_button"
+        android:layout_toLeftOf="@+id/time_display"
+        android:src="@drawable/reject_icon" />
+
+</RelativeLayout>
