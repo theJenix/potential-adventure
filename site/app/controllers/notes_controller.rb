@@ -4,6 +4,17 @@ class NotesController < ApplicationController
 
   # GET /notes
   # GET /notes.json
+  def index_json
+    @ni = Note.all
+    p = params()
+    if (p.has_key?("lat") && p.has_key?("lon"))
+      @ni = notes_in_range(p['lat'].to_f, p['lon'].to_f)
+    end
+    @notes = @ni
+
+    render :json => @notes.to_json( )
+  end
+
   def index
     @ni = Note.all
     p = params()
@@ -11,11 +22,7 @@ class NotesController < ApplicationController
       @ni = notes_in_range(p['lat'].to_f, p['lon'].to_f)
     end
     @notes = @ni
-    respond_to do |format|
-      format.json { render :json => @notes.to_json( ) }
-    end
   end
-
   def index_hack
     @ni = Note.all
     p = params()
