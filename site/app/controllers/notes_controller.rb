@@ -1,10 +1,16 @@
 class NotesController < ApplicationController
+  include NotesHelper
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   # GET /notes
   # GET /notes.json
   def index
     @notes = Note.all
+    puts @notes
+    p = params()
+    if (p.has_key?("lat") && p.has_key?("lon"))
+      @notes = notes_in_range(p['lat'].to_f, p['lon'].to_f)
+    end
   end
 
   # GET /notes/1

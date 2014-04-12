@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140412013227) do
+ActiveRecord::Schema.define(version: 20140412033836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,13 +20,13 @@ ActiveRecord::Schema.define(version: 20140412013227) do
     t.string   "title"
     t.string   "note"
     t.string   "audio_path"
-    t.integer  "latitude"
-    t.integer  "longitude"
     t.string   "sender"
     t.string   "recipient"
     t.integer  "visible_range"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "users", force: true do |t|
