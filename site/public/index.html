@@ -24,6 +24,8 @@
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript">
+      var newMarker = null;
+
       function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(33.775626, -84.396266),
@@ -80,6 +82,7 @@
   <body>
     <div id="map-canvas"></div>
     <div id="nav">
+      <a href="add">Add Pin</a>
     </div>
   </body>
 </html>
