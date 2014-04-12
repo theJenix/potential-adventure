@@ -54,7 +54,7 @@
               audio = "<audio controls><source src='" + note.audio_path + "' type='audio/mpeg'></audio>";
             }
 
-            if (note.image_path != "") {
+            if (note.image_path != "" && note.image_path != null) {
               pic = "<img src='" + note.image_path + "' ></img>";
             }
 
