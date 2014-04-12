@@ -122,7 +122,7 @@ public class VoiceRecordFragment extends RoboFragment {
     
             mRecorder.start();
             
-            counter.setBase(0);
+//            counter.setBase(0);
             counter.start();
         }
     }
