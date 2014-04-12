@@ -8,23 +8,18 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.View;
 
-import com.punventure.punadventure.event.SaveNoteEvent;
 import com.punventure.punadventure.event.LocationAvailableEvent;
 import com.punventure.punadventure.event.LocationEvent;
 import com.punventure.punadventure.event.NoteSelectedEvent;
 import com.punventure.punadventure.event.RequestNotesEvent;
-import com.punventure.punadventure.model.Note;
 import com.punventure.punadventure.model.OttoBus;
 import com.punventure.punadventure.svc.NoteRetrievalService;
+import com.punventure.punadventure.svc.NoteSaveService;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -61,7 +56,10 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
         
         Intent service = new Intent(this, NoteRetrievalService.class);
         bindService(service, this, Context.BIND_AUTO_CREATE);
-        
+
+        service = new Intent(this, NoteSaveService.class);
+        bindService(service, this, Context.BIND_AUTO_CREATE);
+
         setRefreshTimer();
 
         if (findViewById(R.id.note_detail_container) != null) {
@@ -107,42 +105,6 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
 //        startActivityForResult(new Intent(this, VoiceRecordActivity.class), 1);    	
 //
 //    }
-
-    Uri cameraFileUri = null;
-    public void startAct(View v) {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        cameraFileUri = OutputMedia.getOutputMediaFileUri(OutputMedia.MEDIA_TYPE_IMAGE); // create a file to save the image
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraFileUri); // set the image file name
-
-        // start the image capture Intent
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-    }
-
-    public void onActivityResult (int requestCode, int resultCode, Intent data) {
-    	if (resultCode == RESULT_CANCELED) {
-    		Log.d("Return", "Canceled");
-    	} else if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
-                Log.d("Return", cameraFileUri.toString());
-                Note note = new Note("CAMERA" + Math.random() * 10000);
-                note.setNote("CAMERAS, BITCH");
-                note.setImagePath(cameraFileUri.toString());
-                OttoBus.publish(new SaveNoteEvent(note));
-                break;
-            case CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE:
-                Log.d("Return", "Clear");
-                Log.d("Return", data.getStringExtra("fileName"));
-                Note anote = new Note("VOICE" + Math.random() * 10000);
-                anote.setNote("VOICE, BITCH");
-                anote.setAudioPath(data.getStringExtra("fileName"));
-                OttoBus.publish(new SaveNoteEvent(anote));
-                break;
-            }
-    	}
-    }
 
     /**
      * Callback method from {@link NoteListFragment.Callbacks} indicating that
