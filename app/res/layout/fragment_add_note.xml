@@ -176,7 +176,7 @@
         android:layout_below="@+id/add_audio_button"
         android:layout_marginTop="10dp"
         android:layout_alignLeft="@+id/add_audio_button"
-        android:src="@drawable/photo_icon" />
+        android:src="@drawable/camera_icon" />
 
     <ImageView
         android:id="@+id/blue_rect"

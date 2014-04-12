@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <title>Adventure!</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
@@ -16,8 +17,11 @@
       }
       #nav {
         height: 10%;
-        background-color: black;
-        color: white;
+      }
+
+      #addBtn {
+        margin-top: 10px;
+        margin-left: 10px;
       }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBetWit_oBeGVWVCTCflsH0QytUwoDg-i8&sensor=false">
@@ -39,8 +43,14 @@
         $.getJSON("http://punadv.herokuapp.com/notes.json", function(data) {
           $.each(data, function(index, note) {
             var audio = "";
+            var pic = "";
+
             if (note.audio_path != "") {
               audio = "<audio controls><source src='" + note.audio_path + "' type='audio/mpeg'></audio>";
+            }
+
+            if (note.image_path != "") {
+              pic = "<img src='" + note.image_path + "' ></img>";
             }
 
             var content = '<div class="infoWindow">'+
@@ -50,7 +60,7 @@
               '<h2 class="names">From: ' + note.sender + '</h2>'+
               '<h2 class="names">To: ' + note.recipient + '</h2>'+
               '<div id="bodyContent">'+
-                '<p>' + note.note + '</p>'+ audio +
+                '<p>' + note.note + '</p>'+ pic + audio +
               '</div>'+
               '</div>';
 
@@ -80,6 +90,7 @@
   <body>
     <div id="map-canvas"></div>
     <div id="nav">
+      <a id="addBtn" class="pure-button" href="add.html">Add Note</a>
     </div>
   </body>
 </html>

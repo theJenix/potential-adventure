@@ -27,8 +27,8 @@ public class VoiceRecordFragment extends RoboFragment {
     @InjectView(R.id.end_playback) ImageView playbackStopButton;
     @InjectView(R.id.start_recording_button) Button recButton;
     @InjectView(R.id.end_recording_button) Button recStopButton;
-    @InjectView(R.id.add_voice_final) Button addVoiceButton;
-    @InjectView(R.id.cancel_voice) Button cancelVoiceButton;
+    @InjectView(R.id.accept_button) ImageView addVoiceButton;
+    @InjectView(R.id.cancel_button) ImageView cancelVoiceButton;
 
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
