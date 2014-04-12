@@ -47,18 +47,20 @@
 
       google.maps.event.addDomListener(window, 'load', initialize);
 
-      $("#newNote").submit(function(event) {
-        event.preventDefault();
-        alert(Testing);
-        var tit = $("#tit").val();
-        var msg = $("#msg").val();
-        var nme = $("#nme").val();
-        var rng = $("#rng").val();
-        var lat = $("#lat").val();
-        var lon = $("#lon").val();
+      $( document ).ready(function() {
+        $("#newNote").submit(function(event) {
+          event.preventDefault();
+          alert("Testing");
+          var tit = $("#tit").val();
+          var msg = $("#msg").val();
+          var nme = $("#nme").val();
+          var rng = $("#rng").val();
+          var lat = $("#lat").val();
+          var lon = $("#lon").val();
 
-        $.post( "http://punadv.herokuapp.com/notes", { title: tit, note: msg, audio_path: "", latitude: parseFloat(lat), longitude: parseFloat(lon), sender: nme, recipient: "", visible_range: parseInt(rng), image_path: ""})
-      });
+          $.post( "http://punadv.herokuapp.com/notes", { title: tit, note: msg, audio_path: "", latitude: parseFloat(lat), longitude: parseFloat(lon), sender: nme, recipient: "", visible_range: parseInt(rng), image_path: ""})
+        });
+      }
     </script>
   </head>
   <body>
