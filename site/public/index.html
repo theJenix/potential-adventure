@@ -14,12 +14,18 @@
       h1.firstHeading {
         margin-top: 5px;
         margin-bottom: 5px;
+        width: 400px;
       }
       #nav {
         position: absolute;
         bottom: 10px;
-        width: 100px;
+        width: 150px;
         left: 10px;
+      }
+
+      .pure-menu-heading {
+        background-color: #0078E7 !important;
+        color: white !important;
       }
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBetWit_oBeGVWVCTCflsH0QytUwoDg-i8&sensor=false">
@@ -48,7 +54,7 @@
               audio = "<audio controls><source src='" + note.audio_path + "' type='audio/mpeg'></audio>";
             }
 
-            if (note.image_path != "") {
+            if (note.image_path != "" && note.image_path != null) {
               pic = "<img src='" + note.image_path + "' ></img>";
             }
 
