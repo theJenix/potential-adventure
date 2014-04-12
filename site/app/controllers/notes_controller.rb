@@ -43,7 +43,7 @@ class NotesController < ApplicationController
     directory = "public/images"
     path = File.join(directory, name)
     File.open(path, "wb") { |f| f.write(params[:image].read) }
-    n.image_path = directory + "/" + name
+    n.image_path = "images" + "/" + name
     n.save();
   end
 

@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.punventure.punadventure.model.Note;
+import com.punventure.punadventure.svc.LocationService;
+import com.punventure.punadventure.svc.LocationService.LocationServiceBinder;
 import com.punventure.punadventure.svc.NoteRetrievalService;
 import com.punventure.punadventure.svc.NoteRetrievalService.NoteRetrievalServiceBinder;
 
@@ -28,7 +31,9 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
 	
     @InjectView(R.id.play_audio_button) ImageView audioButton;
     @InjectView(R.id.show_photo_button) ImageView photoButton;
-    
+    @InjectView(R.id.latitude_display) TextView latView;
+    @InjectView(R.id.longitude_display) TextView lonView;
+
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -51,6 +56,8 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
 
         Intent service = new Intent(this.getActivity(), NoteRetrievalService.class);
         this.getActivity().bindService(service, this, Context.BIND_AUTO_CREATE);
+        getActivity().bindService(new Intent(getActivity(), LocationService.class), this, Context.BIND_AUTO_CREATE);
+
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             mNoteId = getArguments().getLong(ARG_ITEM_ID);
         }
@@ -88,12 +95,38 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        this.note = ((NoteRetrievalServiceBinder)service).getService().findNoteById(mNoteId);
-        // Show the dummy content as text in a TextView.
-        if (this.note != null) {
-            ((TextView) getView().findViewById(R.id.title_display))
-                    .setText(note.getTitle());
+        if (name.toString().contains("NoteRetrievalService")) {
+            this.note = ((NoteRetrievalServiceBinder)service).getService().findNoteById(mNoteId);
+            // Show the dummy content as text in a TextView.
+            if (this.note != null) {
+                ((TextView) getView().findViewById(R.id.title_display))
+                        .setText(note.getTitle());
+                if (note.getAudio_path() == null || note.getAudio_path().isEmpty()) {
+                    audioButton.setVisibility(View.INVISIBLE);
+                }
+                if (note.getImage_path() == null || note.getImage_path().isEmpty()) {
+                    photoButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        } else {
+            Location location = ((LocationServiceBinder)service).getService().getCurrentLocation();
+            if (this.latView != null) {
+                this.latView.setText((location.getLatitude() >= 0 ? "N" : "S")
+                        + formatLatLon(Math.abs(location.getLatitude())));
+            }
+
+            if (this.lonView != null) {
+                this.lonView.setText((location.getLongitude() >= 0 ? "E" : "W")
+                        + formatLatLon(Math.abs(location.getLongitude())));
+            }
         }
+    }
+    private String formatLatLon(double latlon) {
+        String str = Location.convert(latlon, Location.FORMAT_MINUTES);
+        if (str.indexOf(".") >= 0) {
+            str = str.substring(0, str.indexOf(".") + 4);
+        }
+        return str.replace(":", " ");
     }
 
     @Override

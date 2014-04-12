@@ -1,10 +1,11 @@
 package com.punventure.punadventure.svc;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
@@ -23,6 +24,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -32,10 +34,12 @@ import com.punventure.punadventure.model.Note;
 public class GsonClient {
 
     private static final String TAG = "GsonClient";
+    private Context context;
 
-    public GsonClient() {
-        // TODO Auto-generated constructor stub
+    public GsonClient(Context context) {
+        this.context = context;
     }
+
     private <T> String resourceName(Class<T> clazz) {
         return clazz.getSimpleName().toLowerCase() + "s.json";
     }
@@ -142,5 +146,23 @@ public class GsonClient {
             }
             return builder.toString();
         }
+    }
+    public String fetchImage(String image_path) throws IOException {
+        if (image_path.startsWith("public/")) { //HAXX
+            image_path = image_path.substring(7);
+        }
+        URL url = new URL("http://" + host + "/" + image_path);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        String fileName = image_path.substring(image_path.lastIndexOf("/") + 1);
+        FileOutputStream fos = this.context.openFileOutput(fileName, 0);
+        byte [] buffer = new byte[4096];
+        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+        int bytesRead = 0;
+        while (( bytesRead = bis.read(buffer, 0, 4096)) > 0) {
+            fos.write(buffer, 0, bytesRead);
+        }
+        fos.flush();
+        fos.close();
+        return this.context.getFileStreamPath(fileName).getCanonicalPath();
     }
 }
