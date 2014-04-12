@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.punventure.punadventure.event.NoteSavedEvent;
 import com.punventure.punadventure.event.SaveNoteEvent;
 import com.punventure.punadventure.model.Note;
 import com.punventure.punadventure.model.OttoBus;
@@ -47,6 +48,10 @@ public class NoteSaveService extends Service {
                 }
                 return null;
             }
+            
+            protected void onPostExecute(Void result) {
+                OttoBus.publish(new NoteSavedEvent());
+            };
             
         }.execute();
     }
