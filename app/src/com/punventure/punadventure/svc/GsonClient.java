@@ -1,5 +1,6 @@
 package com.punventure.punadventure.svc;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,10 +39,11 @@ public class GsonClient {
         return clazz.getSimpleName().toLowerCase() + "s.json";
     }
 
-    String host = "143.215.113.33";
+//    String host = "143.215.113.33:3000";
+    String host = "punadv.herokuapp.com";
     public <T> List<T> list(Class<T> clazz, Map<String, Object> params) throws IOException {
 //        URL url = new URL("http://punadv.herokuapp.com/" + resourceName(clazz) + buildParams(params));
-        URL url = new URL("http://" + host + ":3000/" + resourceName(clazz) + buildParams(params));
+        URL url = new URL("http://" + host + "/" + resourceName(clazz) + buildParams(params));
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         Gson gson = new Gson();
         @SuppressWarnings("unchecked")
@@ -50,10 +52,48 @@ public class GsonClient {
         T[] objects = (T[]) gson.fromJson(new InputStreamReader(conn.getInputStream()), array.getClass());
         return Arrays.asList(objects);
     }
-    
+
+    public <T> void post(T obj) {
+        HttpURLConnection connection = null;
+        try {
+            Gson gson = new Gson();
+            String json = gson.toJson(obj);
+            URL url = new URL("http://" + host + "/" + resourceName(obj.getClass()));
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Length",
+                    Integer.toString(json.length()));
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.getOutputStream().write(json.getBytes());
+            connection.connect();
+            connection.getResponseCode();
+            InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+            BufferedReader br = new BufferedReader(reader);
+            while (br.ready()) {
+                String line = br.readLine();
+            }
+            // this.retries = 0;
+        } catch (IOException ex) {
+            // this.retries++;
+            // if (this.retries >= 5) {
+            throw new RuntimeException(ex);
+            // }
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    public void postAudio(long id, String audioPath) {
+        // TODO Auto-generated method stub
+        
+    }
+
     public <T> void postImage(long id, String path) {
         HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("http://" + host + ":3000/notes/" + id + "/image");
+        HttpPost post = new HttpPost("http://" + host + "/notes/" + id + "/image");
         post.addHeader("content_type","image/jpeg");
         MultipartEntityBuilder build = MultipartEntityBuilder.create();
         build.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);

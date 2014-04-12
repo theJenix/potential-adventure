@@ -50,48 +50,9 @@ public class LocationFragment extends RoboFragment implements ServiceConnection 
 
             @Override
             public void onClick(View v) {
-                startAct(v);
+                startActivity(new Intent(getActivity(), AddNoteActivity.class));
             }
         });
-    }
-
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    private static final int CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE = 2;
-
-    Uri cameraFileUri = null;
-    public void startAct(View v) {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        cameraFileUri = OutputMedia.getOutputMediaFileUri(OutputMedia.MEDIA_TYPE_IMAGE); // create a file to save the image
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraFileUri); // set the image file name
-
-        // start the image capture Intent
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-    }
-
-    public void onActivityResult (int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_CANCELED) {
-            Log.d("Return", "Canceled");
-        } else if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
-                Log.d("Return", cameraFileUri.toString());
-                Note note = new Note("CAMERA" + Math.random() * 10000);
-                note.setNote("CAMERAS, BITCH");
-                note.setImagePath(cameraFileUri.getPath());
-                OttoBus.publish(new SaveNoteEvent(note));
-                break;
-            case CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE:
-                Log.d("Return", "Clear");
-                Log.d("Return", data.getStringExtra("fileName"));
-                Note anote = new Note("VOICE" + Math.random() * 10000);
-                anote.setNote("VOICE, BITCH");
-                anote.setAudioPath(data.getStringExtra("fileName"));
-                OttoBus.publish(new SaveNoteEvent(anote));
-                break;
-            }
-        }
     }
 
     @Override
