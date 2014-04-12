@@ -58,7 +58,9 @@ public class NoteRetrievalService extends Service {
     }
 
     @Subscribe public void onRequestNotes(RequestNotesEvent event) {
-        new NoteRetrievalTask().execute(this.location);
+    	if (location != null) {
+    		new NoteRetrievalTask().execute(this.location);
+    	}
     }
 
     private class NoteRetrievalTask extends AsyncTask<Location, Void, List<Note>> {
