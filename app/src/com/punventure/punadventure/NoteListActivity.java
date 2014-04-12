@@ -1,13 +1,15 @@
 package com.punventure.punadventure;
 
+import roboguice.activity.RoboFragmentActivity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.FragmentActivity;
+import android.provider.Settings;
 
+import com.punventure.punadventure.event.LocationAvailableEvent;
 import com.punventure.punadventure.event.NoteSelectedEvent;
 import com.punventure.punadventure.model.OttoBus;
 import com.punventure.punadventure.svc.NoteRetrievalService;
@@ -28,7 +30,7 @@ import com.squareup.otto.Subscribe;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends FragmentActivity implements ServiceConnection {
+public class NoteListActivity extends RoboFragmentActivity implements ServiceConnection {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -96,5 +98,12 @@ public class NoteListActivity extends FragmentActivity implements ServiceConnect
     public void onServiceDisconnected(ComponentName name) {
         // TODO Auto-generated method stub
         
+    }
+    
+    @Subscribe public void onLocationAvailabilityChanged(LocationAvailableEvent event) {
+        if (!event.isAvailable()) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
     }
 }

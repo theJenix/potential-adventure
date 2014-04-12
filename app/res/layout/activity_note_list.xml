@@ -1,10 +1,31 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/note_list"
-    android:name="com.punventure.punadventure.NoteListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+    tools:context="com.punventure.punadventure.NoteListActivity" >
+
+<fragment 
+    android:id="@+id/note_list"
+    android:name="com.punventure.punadventure.NoteListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_above="@+id/location"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     tools:context="com.punventure.punadventure.NoteListActivity"
     tools:layout="@android:layout/list_content" />
+
+<fragment
+    android:id="@+id/location"
+    android:name="com.punventure.punadventure.LocationFragment"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    tools:context="com.punventure.punadventure.NoteListActivity"
+    tools:layout="@android:layout/list_content" />
+
+</RelativeLayout>

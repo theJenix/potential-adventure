@@ -10,20 +10,22 @@ import android.location.LocationProvider;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 
 import com.punventure.punadventure.event.LocationAvailableEvent;
+import com.punventure.punadventure.event.LocationEvent;
 import com.punventure.punadventure.model.OttoBus;
 
 public class LocationService extends Service {
 
-    public   class LocationServiceBinder extends Binder implements ServiceBinder<LocationService> {
+    public class LocationServiceBinder extends Binder implements ServiceBinder<LocationService> {
 
         public LocationService getService() {
             return LocationService.this;
         };
     }
 
-    private static final long MIN_UPDATE_TIME = 0;
+    private static final long MIN_UPDATE_TIME = 1 * 1000; //milliseconds
 
     private static final float MIN_UPDATE_DISTANCE = 0;
 
@@ -47,7 +49,12 @@ public class LocationService extends Service {
         Criteria criteria = new Criteria();
 //        criteria.setPowerRequirement(Criteria.POWER_LOW);
 //        Provider provider = locationManager.getBestProvider(criteria, false);
-        locationManager.requestLocationUpdates(MIN_UPDATE_TIME, MIN_UPDATE_DISTANCE, criteria, new LocationListener() {
+        
+        String provider = locationManager.getBestProvider(criteria, false);
+        if (!this.locationManager.isProviderEnabled(provider)) {
+            OttoBus.publish(new LocationAvailableEvent(false));
+        }
+        LocationListener listener = new LocationListener() {
             
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -66,8 +73,9 @@ public class LocationService extends Service {
             
             @Override
             public void onLocationChanged(Location location) {
-                System.out.println(String.format("%d, %d", location.getLatitude(), location.getLongitude()));
+                OttoBus.publish(new LocationEvent(location));
             }
-        }, this.getMainLooper());
+        };
+        locationManager.requestLocationUpdates(provider, MIN_UPDATE_TIME, MIN_UPDATE_DISTANCE, listener, this.getMainLooper());
     }
 }
