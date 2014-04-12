@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.punventure.punadventure.event.NoteSavedEvent;
-import com.punventure.punadventure.model.Note;
 import com.punventure.punadventure.model.OttoBus;
 import com.squareup.otto.Subscribe;
 
