@@ -1,10 +1,14 @@
 package com.punventure.punadventure;
 
+import java.io.File;
 import java.io.IOException;
 
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -19,12 +23,10 @@ import android.widget.Chronometer;
 public class VoiceRecordActivity extends RoboActivity {
 	
 	@InjectView(R.id.record_time_display) Chronometer counter;
-//	@InjectView(R.id.start_recording_button) Button startRecordButton;
-//	@InjectView(R.id.end_recording_button) Button stopRecordButton;
 	
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
-    private static final String fileName = "tempVoiceFile.mp4";
+    private String fileName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,15 @@ public class VoiceRecordActivity extends RoboActivity {
 
     private void startRecording() {
     	if (mRecorder == null) {
+    		try {
+	    		if (fileName != null) {
+	    			(new File(fileName)).delete();
+	    		}
+	    		fileName = File.createTempFile("voice", ".mp4").getAbsolutePath();
+    		} catch (IOException e) {
+	        	Log.e("AUDIO", "file preparation failed");
+    		}
+    		
 	        mRecorder = new MediaRecorder();
 	        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 	        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
@@ -106,20 +117,45 @@ public class VoiceRecordActivity extends RoboActivity {
     }
     
     private void startPlayback() {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(fileName);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-        	Log.e("AUDIO", "player prepare() failed");
-        }
+    	if (mRecorder == null && fileName != null) {
+	        mPlayer = new MediaPlayer();
+	        try {
+	            mPlayer.setDataSource(fileName);
+	            mPlayer.prepare();
+	            mPlayer.start();
+	        } catch (IOException e) {
+	        	Log.e("AUDIO", "player prepare() failed");
+	        }
+    	}
     }
 
-    private void stopPlaying() {
-    	mPlayer.stop();
-        mPlayer.release();
-        mPlayer = null;
+    private void stopPlayback() {
+    	if (mRecorder == null) {
+	    	mPlayer.stop();
+	        mPlayer.release();
+	        mPlayer = null;
+    	}
+    }
+    
+    private void finalizeRecording() {
+    	if (fileName == null) {
+    		new AlertDialog.Builder(this)
+		    	    .setTitle("No Recording")
+		    	    .setMessage("No recording was made. Either record a message or cancel.")
+		    	    .setCancelable(true)
+		    	    .show();
+    	} else {
+        	Intent i = getIntent();
+        	setResult(RESULT_OK, i);
+        	i.putExtra("fileName", fileName);
+        	finish();
+    	}
+    }
+    
+    private void cancelRecording() {
+    	Intent i = getIntent();
+    	setResult(RESULT_CANCELED, i);
+    	finish();
     }
 
 
