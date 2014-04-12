@@ -25,7 +25,7 @@ public class Settings {
     public static Settings loadOrInit(Context context) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         _instance = new Settings(context);
-        _instance.name = "Beautiful";//settings.getString(NAME_KEY, null);
+        _instance.name = settings.getString(NAME_KEY, null);
         _instance.deviceId = Secure.getString(context.getContentResolver(),
                                 Secure.ANDROID_ID); 
         return _instance;

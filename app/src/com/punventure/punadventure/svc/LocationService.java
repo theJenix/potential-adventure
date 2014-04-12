@@ -10,6 +10,7 @@ import android.location.LocationProvider;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.punventure.punadventure.event.LocationAvailableEvent;
 import com.punventure.punadventure.event.LocationEvent;
@@ -85,6 +86,10 @@ public class LocationService extends Service {
             
             @Override
             public void onLocationChanged(Location l) {
+                if (l == null) {
+                    Log.wtf("LocationServices", "LOCATION CHANGED TO NULL WTF");
+                }
+
                 location = l;
                 OttoBus.publish(new LocationEvent(l));
             }
