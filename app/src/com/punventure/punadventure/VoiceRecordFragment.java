@@ -80,21 +80,21 @@ public class VoiceRecordFragment extends RoboFragment {
             }
         });
         
-        addVoiceButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                finalizeRecording(view);
-            }
-        });
-        
-        cancelVoiceButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cancelRecording(view);
-            }
-        });
+//        addVoiceButton.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                finalizeRecording(view);
+//            }
+//        });
+//        
+//        cancelVoiceButton.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                cancelRecording(view);
+//            }
+//        });
     }
 
     public void startRecording(View v) {

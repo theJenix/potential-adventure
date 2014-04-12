@@ -38,7 +38,13 @@ public class NoteSaveService extends Service {
             protected Void doInBackground(Void... params) {
                 GsonClient client = new GsonClient();
                 Note note = event.getNote();
-                client.postImage(1, note.getImagePath());
+                client.post(note);
+                if (note.getAudioPath() != null) {
+                    client.postAudio(note.getId(), note.getAudioPath());                    
+                }
+                if (note.getImagePath() != null) {
+                    client.postImage(note.getId(), note.getImagePath());                    
+                }
                 return null;
             }
             

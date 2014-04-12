@@ -99,13 +99,6 @@ public class NoteListActivity extends RoboFragmentActivity implements ServiceCon
         setRefreshTimer();
     }
 
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    private static final int CAPTURE_AUDIO_ACTIVITY_REQUEST_CODE = 2;
-//    public void startAct(View v) {
-//        startActivityForResult(new Intent(this, VoiceRecordActivity.class), 1);    	
-//
-//    }
-
     /**
      * Callback method from {@link NoteListFragment.Callbacks} indicating that
      * the item with the given ID was selected.

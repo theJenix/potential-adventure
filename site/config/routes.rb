@@ -1,4 +1,5 @@
 Site::Application.routes.draw do
+  get 'notes.json' => 'notes#index_json'
   resources :notes
 
   post 'notes/:id/image' => 'notes#image'
