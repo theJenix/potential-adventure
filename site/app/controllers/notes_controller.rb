@@ -11,6 +11,9 @@ class NotesController < ApplicationController
       @ni = notes_in_range(p['lat'].to_f, p['lon'].to_f)
     end
     @notes = @ni
+    respond_to do |format|
+      format.json { render :json => @notes.to_json( ) }
+    end
   end
 
   def index_hack
@@ -29,10 +32,10 @@ class NotesController < ApplicationController
 
   def image
     n = Note.find(params[:id])
-    name = params[:upload][:file].original_filename
+    name = params[:fileName]
     directory = "public/images"
     path = File.join(directory, name)
-    File.open(path, "wb") { |f| f.write(params[:upload][:file].read) }
+    File.open(path, "wb") { |f| f.write(params[:image].read) }
     n.image_path = directory + "/" + name
     n.save();
   end
