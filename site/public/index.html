@@ -26,11 +26,30 @@
       function makeMarkers(map) {
         $.getJSON("http://punadv.herokuapp.com/notes.json", function(data) {
           $.each(data, function(index, note) {
+            var content = '<div id="content">'+
+              '<div id="siteNotice">'+
+              '</div>'+
+              '<h1 id="firstHeading" class="firstHeading">' + note.title + '</h1>'+
+              '<div id="bodyContent">'+
+                '<p>' + note.note + '</p>'+
+              '</div>'+
+              '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+              content: content
+            });
+
+
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(note.latitude, note.longitude),
               map: map,
               title: note.title
             });
+
+            google.maps.event.addListener(marker, 'click', function() {
+              infowindow.open(map,marker);
+            });
+
           });
         });
       }
