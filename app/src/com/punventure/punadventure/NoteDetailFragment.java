@@ -1,5 +1,6 @@
 package com.punventure.punadventure;
 
+import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,7 +8,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +24,7 @@ import com.punventure.punadventure.svc.NoteRetrievalService.NoteRetrievalService
  * contained in a {@link NoteListActivity} in two-pane mode (on tablets) or a
  * {@link NoteDetailActivity} on handsets.
  */
-public class NoteDetailFragment extends Fragment implements ServiceConnection {
+public class NoteDetailFragment extends RoboFragment implements ServiceConnection {
 	
     @InjectView(R.id.play_audio_button) ImageView audioButton;
     @InjectView(R.id.show_photo_button) ImageView photoButton;
@@ -71,7 +71,7 @@ public class NoteDetailFragment extends Fragment implements ServiceConnection {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(getActivity(), SoundPlayActivity.class);
-            	intent.putExtra("audioPath", note.getAudioPath());
+            	intent.putExtra("audioPath", note.getAudio_path());
             	startActivity(intent);
             }
         }); 
@@ -80,7 +80,7 @@ public class NoteDetailFragment extends Fragment implements ServiceConnection {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(getActivity(), PhotoViewActivity.class);
-            	intent.putExtra("imagePath", note.getImagePath());
+            	intent.putExtra("imagePath", note.getImage_path());
             	startActivity(intent);
             }
         }); 
