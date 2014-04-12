@@ -1,5 +1,11 @@
 package com.punventure.punadventure;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import android.content.ComponentName;
@@ -35,6 +41,7 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
     @InjectView(R.id.longitude_display) TextView lonView;
     @InjectView(R.id.note_display) TextView noteView;
     @InjectView(R.id.back_button) ImageView backButton;
+    @InjectView(R.id.time_display) TextView timeView;
 
     /**
      * The fragment argument representing the item ID that this fragment
@@ -119,6 +126,21 @@ public class NoteDetailFragment extends RoboFragment implements ServiceConnectio
                 if (note.getImage_path() == null || note.getImage_path().isEmpty()) {
                     photoButton.setVisibility(View.INVISIBLE);
                 }
+                
+                try {
+                    DateFormat serverDf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                    Date time;
+                    Calendar cal = Calendar.getInstance();
+                    time = serverDf.parse(note.getCreated_at());
+                    cal.setTime(time);
+                    cal.add(Calendar.HOUR_OF_DAY, -4);
+                    DateFormat df = new SimpleDateFormat("hh:mm:ss");
+                    timeView.setText(df.format(cal.getTime()));
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
             }
         } else {
             Location location = ((LocationServiceBinder)service).getService().getCurrentLocation();
