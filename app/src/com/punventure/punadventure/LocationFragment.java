@@ -77,7 +77,7 @@ public class LocationFragment extends RoboFragment implements ServiceConnection 
 
     private String formatLatLon(double latlon) {
         String str = Location.convert(latlon, Location.FORMAT_MINUTES);
-        if (str.indexOf(".") >= 0) {
+        if (str.indexOf(".") >= 0 && str.length() >= 11) {
             str = str.substring(0, str.indexOf(".") + 4);
         }
         return str.replace(":", " ");
