@@ -1,7 +1,7 @@
 Adventure!
 ===================
 
-Adventure! is an Android app and web app designed to set and retrieve location aware notes.  Using the Android app, you can drop text, voice, or image notes at a given geographic location.  Other phones running the app will see that note only when they are near that location.  Using the web app, you can see all notes presented as pins on a Google map, and add notes that will be seen by people who travel near the specified locations.
+Adventure! is an Android app and web app to enable users to set and retrieve location aware notes.  Using the Android app, you can drop text, voice, or image notes at a given geographic location.  Other phones running the app will see that note only when they are near that location.  Using the web app, you can see all notes presented as pins on a Google map, and add notes that will be seen by people who travel near the specified locations.
 
 Possible uses include:
 * Leaving notes for friends/loved ones
